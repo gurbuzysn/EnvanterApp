@@ -1,0 +1,6 @@
+@EnvanterApp.WebAPI_HostAddress = http://localhost:5288
+
+GET {{EnvanterApp.WebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
