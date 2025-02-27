@@ -2,12 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace EnvanterApp.Domain.Entities.Identity
 {
-    public class IdentitiyBaseEntity
+    public class IdentityUser
     {
         public Guid Id { get; set; }
         public Status Status { get; set; }
@@ -17,5 +18,12 @@ namespace EnvanterApp.Domain.Entities.Identity
         public Guid ModifiedBy { get; set; }
         public DateTime DeletedDate { get; set; }
         public Guid DeletedBy { get; set; }
+        public string FirstName { get; set; } = null!;
+        public string LastName { get; set; } = null!;
+        public string FullName => $"{FirstName} {LastName}";
+        public Gender Gender { get; set; }
+        public DateTime DateOfBirth { get; set; }
+        public string? ImageUri { get; set; }
+
     }
 }

@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EnvanterApp.Domain.Entities.Identity
+namespace EnvanterApp.Domain.Enums
 {
-    public class Employee : IdentityUser
+    public enum Gender
     {
-
+        Woman = 1,
+        Man
     }
 }
