@@ -1,3 +1,5 @@
+using EnvanterApp.Persistence;
+
 namespace EnvanterApp.WebAPI
 {
     public class Program
@@ -5,6 +7,10 @@ namespace EnvanterApp.WebAPI
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddPersistenceServices(builder.Configuration);
+
+
 
             builder.Services.AddControllers();
 
