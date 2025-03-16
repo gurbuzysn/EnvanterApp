@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EnvanterApp.Domain.Entities.Items
 {
-    public class Pc : BaseItem
+    public class Computer : BaseItem
     {
         public string PcName { get; set; } = null!;
         public string CoreModel { get; set; } = null!;
