@@ -1,14 +1,9 @@
 ﻿using EnvanterApp.Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace EnvanterApp.Domain.Entities.Identity
 {
-    public class IdentityUser
+    public class AppUser : IdentityUser
     {
         public Guid Id { get; set; }
         public Status Status { get; set; }

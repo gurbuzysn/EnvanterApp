@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace EnvanterApp.Domain.Entities.Identity
 {
-    public class Employee : AppUser
+    public class Admin : AppUser
     {
-
     }
 }
