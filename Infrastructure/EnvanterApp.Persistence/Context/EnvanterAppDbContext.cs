@@ -22,5 +22,14 @@ namespace EnvanterApp.Persistence.Context
         public DbSet<Mouse> Mouses { get; set; }
 
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<Admin>().ToTable("Admins");
+            builder.Entity<Employee>().ToTable("Employees");
+
+        }
+
     }
 }
