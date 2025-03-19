@@ -16,7 +16,7 @@ namespace EnvanterApp.Persistence.Context
         public EnvanterAppDbContext(DbContextOptions<EnvanterAppDbContext> options) : base(options) { }
 
         public DbSet<Admin> Admins { get; set; }
-        public DbSet<Employee> Employes { get; set; }
+        public DbSet<Employee> Employees { get; set; }
         public DbSet<Computer> Computers { get; set; }
         public DbSet<Keyboard> Keyboards { get; set; }
         public DbSet<Mouse> Mouses { get; set; }
