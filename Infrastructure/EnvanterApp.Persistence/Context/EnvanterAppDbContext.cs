@@ -29,6 +29,41 @@ namespace EnvanterApp.Persistence.Context
             builder.Entity<Admin>().ToTable("Admins");
             builder.Entity<Employee>().ToTable("Employees");
 
+            builder.Entity<Admin>()
+                .Property(a => a.FirstName)
+                .HasColumnName("FirstName");
+
+            builder.Entity<Admin>()
+                .Property(a => a.LastName)
+                .HasColumnName("LastName");
+
+            builder.Entity<Admin>()
+                .Property(a => a.Status)
+                .HasColumnName("Status");
+
+            builder.Entity<Admin>()
+                .Property(a => a.CreatedDate)
+                .HasColumnName("CreatedDate");
+
+            builder.Entity<Admin>()
+                .Property(a => a.ModifiedDate)
+                .HasColumnName("ModifiedDate");
+
+            builder.Entity<Admin>()
+                .Property(a => a.DeletedDate)
+                .HasColumnName("DeletedDate");
+
+            builder.Entity<Admin>()
+                .Property(a => a.Gender)
+                .HasColumnName("Gender");
+
+            builder.Entity<Admin>()
+                .Property(a => a.DateOfBirth)
+                .HasColumnName("DateOfBirth");
+
+            builder.Entity<Admin>()
+                .Property(a => a.ImageUri)
+                .HasColumnName("ImageUri");
         }
 
     }
