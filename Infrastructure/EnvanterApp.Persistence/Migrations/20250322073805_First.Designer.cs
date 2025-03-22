@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EnvanterApp.Persistence.Migrations
 {
     [DbContext(typeof(EnvanterAppDbContext))]
-    [Migration("20250318201620_First")]
+    [Migration("20250322073805_First")]
     partial class First
     {
         /// <inheritdoc />
@@ -41,21 +41,19 @@ namespace EnvanterApp.Persistence.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreatedDate");
 
                     b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DateOfBirth");
 
                     b.Property<Guid>("DeletedBy")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("nvarchar(8)");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletedDate");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -66,17 +64,21 @@ namespace EnvanterApp.Persistence.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("FirstName");
 
                     b.Property<int>("Gender")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Gender");
 
                     b.Property<string>("ImageUri")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ImageUri");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("LastName");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -88,7 +90,8 @@ namespace EnvanterApp.Persistence.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("ModifiedDate");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -111,7 +114,8 @@ namespace EnvanterApp.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Status");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
@@ -132,9 +136,7 @@ namespace EnvanterApp.Persistence.Migrations
 
                     b.ToTable("AspNetUsers", (string)null);
 
-                    b.HasDiscriminator().HasValue("AppUser");
-
-                    b.UseTphMappingStrategy();
+                    b.UseTptMappingStrategy();
                 });
 
             modelBuilder.Entity("EnvanterApp.Domain.Entities.Items.Computer", b =>
@@ -186,6 +188,9 @@ namespace EnvanterApp.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("EmployeeId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("Language")
                         .HasColumnType("int");
 
@@ -216,7 +221,46 @@ namespace EnvanterApp.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("EmployeeId");
+
                     b.ToTable("Computers");
+                });
+
+            modelBuilder.Entity("EnvanterApp.Domain.Entities.Items.Display", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EmployeeId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<Guid>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("Display");
                 });
 
             modelBuilder.Entity("EnvanterApp.Domain.Entities.Items.Keyboard", b =>
@@ -237,6 +281,9 @@ namespace EnvanterApp.Persistence.Migrations
                     b.Property<DateTime>("DeletedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("EmployeeId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<Guid>("ModifiedBy")
                         .HasColumnType("uniqueidentifier");
 
@@ -247,6 +294,8 @@ namespace EnvanterApp.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
 
                     b.ToTable("Keyboards");
                 });
@@ -269,6 +318,9 @@ namespace EnvanterApp.Persistence.Migrations
                     b.Property<DateTime>("DeletedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("EmployeeId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<Guid>("ModifiedBy")
                         .HasColumnType("uniqueidentifier");
 
@@ -279,6 +331,8 @@ namespace EnvanterApp.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
 
                     b.ToTable("Mouses");
                 });
@@ -420,14 +474,42 @@ namespace EnvanterApp.Persistence.Migrations
                 {
                     b.HasBaseType("EnvanterApp.Domain.Entities.Identity.AppUser");
 
-                    b.HasDiscriminator().HasValue("Admin");
+                    b.ToTable("Admins", (string)null);
                 });
 
             modelBuilder.Entity("EnvanterApp.Domain.Entities.Identity.Employee", b =>
                 {
                     b.HasBaseType("EnvanterApp.Domain.Entities.Identity.AppUser");
 
-                    b.HasDiscriminator().HasValue("Employee");
+                    b.ToTable("Employees", (string)null);
+                });
+
+            modelBuilder.Entity("EnvanterApp.Domain.Entities.Items.Computer", b =>
+                {
+                    b.HasOne("EnvanterApp.Domain.Entities.Identity.Employee", null)
+                        .WithMany("Computers")
+                        .HasForeignKey("EmployeeId");
+                });
+
+            modelBuilder.Entity("EnvanterApp.Domain.Entities.Items.Display", b =>
+                {
+                    b.HasOne("EnvanterApp.Domain.Entities.Identity.Employee", null)
+                        .WithMany("Displays")
+                        .HasForeignKey("EmployeeId");
+                });
+
+            modelBuilder.Entity("EnvanterApp.Domain.Entities.Items.Keyboard", b =>
+                {
+                    b.HasOne("EnvanterApp.Domain.Entities.Identity.Employee", null)
+                        .WithMany("Keyboards")
+                        .HasForeignKey("EmployeeId");
+                });
+
+            modelBuilder.Entity("EnvanterApp.Domain.Entities.Items.Mouse", b =>
+                {
+                    b.HasOne("EnvanterApp.Domain.Entities.Identity.Employee", null)
+                        .WithMany("Mouses")
+                        .HasForeignKey("EmployeeId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -479,6 +561,35 @@ namespace EnvanterApp.Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("EnvanterApp.Domain.Entities.Identity.Admin", b =>
+                {
+                    b.HasOne("EnvanterApp.Domain.Entities.Identity.AppUser", null)
+                        .WithOne()
+                        .HasForeignKey("EnvanterApp.Domain.Entities.Identity.Admin", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("EnvanterApp.Domain.Entities.Identity.Employee", b =>
+                {
+                    b.HasOne("EnvanterApp.Domain.Entities.Identity.AppUser", null)
+                        .WithOne()
+                        .HasForeignKey("EnvanterApp.Domain.Entities.Identity.Employee", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("EnvanterApp.Domain.Entities.Identity.Employee", b =>
+                {
+                    b.Navigation("Computers");
+
+                    b.Navigation("Displays");
+
+                    b.Navigation("Keyboards");
+
+                    b.Navigation("Mouses");
                 });
 #pragma warning restore 612, 618
         }
