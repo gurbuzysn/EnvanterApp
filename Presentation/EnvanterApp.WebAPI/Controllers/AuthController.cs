@@ -10,6 +10,8 @@ namespace EnvanterApp.WebAPI.Controllers
         public async Task<IActionResult> Login()
         {
 
+
+            return Ok();
         }
     }
 }
