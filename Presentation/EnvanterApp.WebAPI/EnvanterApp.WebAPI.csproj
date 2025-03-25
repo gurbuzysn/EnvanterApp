@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\EnvanterApp.Application\EnvanterApp.Application.csproj" />
     <ProjectReference Include="..\..\Infrastructure\EnvanterApp.Persistence\EnvanterApp.Persistence.csproj" />
   </ItemGroup>
 
