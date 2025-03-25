@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MediatR;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EnvanterApp.WebAPI.Controllers
@@ -7,7 +9,15 @@ namespace EnvanterApp.WebAPI.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        public async Task<IActionResult> Login()
+        private readonly IMediator _mediator;
+
+        public AuthController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
+
+        public async Task<IActionResult> Login(UserLoginRequest)
         {
 
 
