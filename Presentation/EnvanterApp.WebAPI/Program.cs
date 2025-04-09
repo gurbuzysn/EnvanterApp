@@ -10,13 +10,25 @@ namespace EnvanterApp.WebAPI
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddPersistenceServices(builder.Configuration);
+
             builder.Services.AddApplicationServices();
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+                });
+            });
 
             builder.Services.AddControllers();
 
             builder.Services.AddEndpointsApiExplorer();
 
             builder.Services.AddSwaggerGen();
+
 
             var app = builder.Build();
 
@@ -26,6 +38,8 @@ namespace EnvanterApp.WebAPI
                 app.UseSwaggerUI();
             }
             app.UseHttpsRedirection();
+            
+            app.UseCors("AllowAll");
 
             app.UseAuthorization();
 

@@ -11,13 +11,12 @@ namespace EnvanterApp.WebAPI.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IMediator _mediator;
-
         public AuthController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
-
+        [HttpPost("Login")]
         public async Task<IActionResult> Login(UserLoginQueryRequest request)
         {
             var result = await _mediator.Send(request);
