@@ -1,6 +1,8 @@
 using EnvanterApp.Application;
 using EnvanterApp.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace EnvanterApp.WebAPI
 {
@@ -34,15 +36,12 @@ namespace EnvanterApp.WebAPI
                     ValidateIssuer = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = 
+                    ValidIssuer = builder.Configuration["Token:Issuer"],
+                    ValidAudience = builder.Configuration["Token:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Token:SecurityKey"])),
+                    ClockSkew = TimeSpan.Zero
                 };
             });
-
-
-
-
-
-
 
             builder.Services.AddControllers();
 
@@ -62,6 +61,7 @@ namespace EnvanterApp.WebAPI
             
             app.UseCors("AllowAll");
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();
