@@ -13,6 +13,8 @@ namespace EnvanterApp.WebAPI
 
             builder.Services.AddApplicationServices();
 
+
+            //Cors ayarlarý daha sonra revize edilerek kýsýtlanacak.
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll", builder =>
