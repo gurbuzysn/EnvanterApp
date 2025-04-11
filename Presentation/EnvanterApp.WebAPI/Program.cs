@@ -1,5 +1,6 @@
 using EnvanterApp.Application;
 using EnvanterApp.Persistence;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace EnvanterApp.WebAPI
 {
@@ -12,8 +13,7 @@ namespace EnvanterApp.WebAPI
             builder.Services.AddPersistenceServices(builder.Configuration);
 
             builder.Services.AddApplicationServices();
-
-
+            
             //Cors ayarlarý daha sonra revize edilerek kýsýtlanacak.
             builder.Services.AddCors(options =>
             {
@@ -24,6 +24,25 @@ namespace EnvanterApp.WebAPI
                     .AllowAnyHeader();
                 });
             });
+
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    ValidateAudience = true,
+                    ValidateIssuer = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = 
+                };
+            });
+
+
+
+
+
+
 
             builder.Services.AddControllers();
 
