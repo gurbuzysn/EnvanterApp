@@ -19,7 +19,6 @@ namespace EnvanterApp.WebAPI.Controllers
         [HttpPost("Action")]
         public async Task<IActionResult> Login(LoginUserQueryRequest loginUserQueryRequest)
         {
-
           
 
             return Ok();

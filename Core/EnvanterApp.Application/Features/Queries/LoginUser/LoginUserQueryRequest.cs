@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EnvanterApp.Application.Features.Queries.Auth
+namespace EnvanterApp.Application.Features.Queries.LoginUser
 {
     public class LoginUserQueryRequest : IRequest<GeneralResponse<LoginUserQueryResponse>>
     {

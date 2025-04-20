@@ -9,15 +9,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{C210BE98-8DA7-42EA-9695-4D7866E259C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnvanterApp.Domain", "Core\EnvanterApp.Domain\EnvanterApp.Domain.csproj", "{DBEF1512-0F28-42EC-A342-F8AA18F698CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnvanterApp.Domain", "Core\EnvanterApp.Domain\EnvanterApp.Domain.csproj", "{DBEF1512-0F28-42EC-A342-F8AA18F698CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnvanterApp.Application", "Core\EnvanterApp.Application\EnvanterApp.Application.csproj", "{CF178E63-78CC-4CF9-A41B-707E61845D73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnvanterApp.Application", "Core\EnvanterApp.Application\EnvanterApp.Application.csproj", "{CF178E63-78CC-4CF9-A41B-707E61845D73}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnvanterApp.Infrastructure", "Infrastructure\EnvanterApp.Infrastructure\EnvanterApp.Infrastructure.csproj", "{B35F55B8-3EA2-479F-B6C5-F09DE1D394A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnvanterApp.Infrastructure", "Infrastructure\EnvanterApp.Infrastructure\EnvanterApp.Infrastructure.csproj", "{B35F55B8-3EA2-479F-B6C5-F09DE1D394A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnvanterApp.Persistence", "Infrastructure\EnvanterApp.Persistence\EnvanterApp.Persistence.csproj", "{699648A1-3DBA-44AB-B990-E691870BD07E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnvanterApp.Persistence", "Infrastructure\EnvanterApp.Persistence\EnvanterApp.Persistence.csproj", "{699648A1-3DBA-44AB-B990-E691870BD07E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnvanterApp.WebAPI", "Presentation\EnvanterApp.WebAPI\EnvanterApp.WebAPI.csproj", "{9F9CD04C-083D-4747-B528-A1BCD44263D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnvanterApp.WebAPI", "Presentation\EnvanterApp.WebAPI\EnvanterApp.WebAPI.csproj", "{9F9CD04C-083D-4747-B528-A1BCD44263D0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +50,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{C210BE98-8DA7-42EA-9695-4D7866E259C6} = {AA4F958A-BDBF-4E59-9A66-5A98810728A0}
 		{DBEF1512-0F28-42EC-A342-F8AA18F698CB} = {F4F388F7-D91E-4DAC-98BE-7499C968B0D2}
 		{CF178E63-78CC-4CF9-A41B-707E61845D73} = {F4F388F7-D91E-4DAC-98BE-7499C968B0D2}
 		{B35F55B8-3EA2-479F-B6C5-F09DE1D394A6} = {AA4F958A-BDBF-4E59-9A66-5A98810728A0}
