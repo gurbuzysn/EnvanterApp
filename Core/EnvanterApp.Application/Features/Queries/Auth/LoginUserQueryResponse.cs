@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace EnvanterApp.Application.Features.Queries.Auth
 {
-    public class UserLoginQueryResponse
+    public class LoginUserQueryResponse
     {
-        public UserLoginQueryResponse(string token, DateTime expireDate)
+        public LoginUserQueryResponse(string token, DateTime expireDate)
         {
             Token = token;
             ExpireDate = expireDate;

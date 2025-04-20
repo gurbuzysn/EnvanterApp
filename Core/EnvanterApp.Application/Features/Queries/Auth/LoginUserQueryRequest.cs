@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EnvanterApp.Application.Features.Queries.Auth
 {
-    public class UserLoginQueryRequest : IRequest<UserLoginQueryResponse>
+    public class LoginUserQueryRequest : IRequest<GeneralResponse<LoginUserQueryResponse>>
     {
         public string UserName { get; set; } = null!;
         public string Password { get; set; } = null!;

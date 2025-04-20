@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace EnvanterApp.Application.Features.Queries.Auth
 {
-    public class UserLoginQueryHandler : IRequestHandler<UserLoginQueryRequest, UserLoginQueryResponse>
+    public class LoginUserQueryHandler : IRequestHandler<LoginUserQueryRequest, GeneralResponse<LoginUserQueryResponse>>
     {
       
-        public Task<UserLoginQueryResponse> Handle(UserLoginQueryRequest request, CancellationToken cancellationToken)
+        public Task<GeneralResponse<LoginUserQueryResponse>> Handle(LoginUserQueryRequest request, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

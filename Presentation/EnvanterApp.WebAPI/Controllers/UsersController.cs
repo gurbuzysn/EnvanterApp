@@ -8,18 +8,19 @@ namespace EnvanterApp.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public AuthController(IMediator mediator)
+        public UsersController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
-        [HttpPost("Login")]
-        public async Task<IActionResult> Login(UserLoginQueryRequest request)
+        [HttpPost("Action")]
+        public async Task<IActionResult> Login(LoginUserQueryRequest loginUserQueryRequest)
         {
-            var result = await _mediator.Send(request);
+
+          
 
             return Ok();
         }
