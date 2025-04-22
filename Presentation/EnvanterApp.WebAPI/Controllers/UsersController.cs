@@ -1,7 +1,6 @@
-﻿using EnvanterApp.Application.Features.Queries.Auth;
+﻿using EnvanterApp.Application.Features;
+using EnvanterApp.Application.Features.Queries.LoginUser;
 using MediatR;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EnvanterApp.WebAPI.Controllers
@@ -16,10 +15,10 @@ namespace EnvanterApp.WebAPI.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost("Action")]
+        [HttpPost("[action]")]
         public async Task<IActionResult> Login(LoginUserQueryRequest loginUserQueryRequest)
         {
-          
+            GeneralResponse<LoginUserQueryResponse> response = await _mediator.Send(loginUserQueryRequest);
 
             return Ok();
         }

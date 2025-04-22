@@ -15,4 +15,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.15" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\EnvanterApp.Domain\EnvanterApp.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
