@@ -1,9 +1,13 @@
-﻿using EnvanterApp.Domain.Entities.Identity;
+﻿using EnvanterApp.Application.Abstractions.Token;
+using EnvanterApp.Application.DTOs;
+using EnvanterApp.Domain.Entities.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,35 +17,43 @@ namespace EnvanterApp.Application.Features.Queries.LoginUser
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly ITokenHandler _tokenHandler;
 
-        public LoginUserQueryHandler(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        public LoginUserQueryHandler(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenHandler tokenHandler)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _tokenHandler = tokenHandler;
         }
         public async Task<GeneralResponse<LoginUserQueryResponse>> Handle(LoginUserQueryRequest request, CancellationToken cancellationToken)
         {
             AppUser user = await _userManager.FindByEmailAsync(request.UserName);
 
-            if(user == null)
+            if (user == null)
             {
-                return new GeneralResponse<LoginUserQueryResponse>() { 
+                return new GeneralResponse<LoginUserQueryResponse>()
+                {
                     IsSuccess = false,
                     Message = "Kullanıcı veya şifre hatalı",
-                    Status = System.Net.HttpStatusCode.NotFound 
+                    Status = System.Net.HttpStatusCode.NotFound
                 };
             }
 
             SignInResult result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
-            if (result.Succeeded) //Authentication Başarılı
+            if (result.Succeeded)
             {
-                // Burada Authorize yani yetkilendirme işlemleri yapılacak.
-                // 1-) Token Ver
+                Token token = _tokenHandler.CreateAccessToken();
+
+                return new GeneralResponse<LoginUserQueryResponse>()
+                {
+                    IsSuccess = true,
+                    Status = System.Net.HttpStatusCode.OK,
+                    Result = new LoginUserQueryResponse() { Token = token }
+                };
 
             }
-
-
-
-
+            return new GeneralResponse<LoginUserQueryResponse>() { IsSuccess = false, Message = "Kullanıcı adı veya şifre hatalı", Status = System.Net.HttpStatusCode.NotFound};
+        }
     }
 }
+
