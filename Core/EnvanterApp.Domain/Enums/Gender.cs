@@ -8,7 +8,7 @@ namespace EnvanterApp.Domain.Enums
 {
     public enum Gender
     {
-        Woman = 1,
-        Man
+        Female = 1,
+        Male
     }
 }

@@ -43,10 +43,10 @@ namespace EnvanterApp.Persistence.Migrations
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("DeletedBy")
+                    b.Property<Guid?>("DeletedBy")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DeletedDate")
+                    b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Discriminator")
@@ -81,10 +81,10 @@ namespace EnvanterApp.Persistence.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<Guid>("ModifiedBy")
+                    b.Property<Guid?>("ModifiedBy")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("ModifiedDate")
+                    b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("NormalizedEmail")
@@ -341,6 +341,11 @@ namespace EnvanterApp.Persistence.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
+
                     b.Property<string>("Name")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -357,6 +362,10 @@ namespace EnvanterApp.Persistence.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasDiscriminator().HasValue("IdentityRole");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -477,6 +486,13 @@ namespace EnvanterApp.Persistence.Migrations
                     b.HasBaseType("EnvanterApp.Domain.Entities.Identity.AppUser");
 
                     b.HasDiscriminator().HasValue("Employee");
+                });
+
+            modelBuilder.Entity("EnvanterApp.Domain.Entities.Identity.AppRole", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityRole");
+
+                    b.HasDiscriminator().HasValue("AppRole");
                 });
 
             modelBuilder.Entity("EnvanterApp.Domain.Entities.Items.Computer", b =>

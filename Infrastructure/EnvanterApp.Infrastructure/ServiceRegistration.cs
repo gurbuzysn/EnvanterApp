@@ -1,9 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using EnvanterApp.Application.Abstractions.Token;
+using EnvanterApp.Infrastructure.Services.Token;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace EnvanterApp.Infrastructure
 {
@@ -11,7 +8,7 @@ namespace EnvanterApp.Infrastructure
     {
         public static void AddInfrastructureServices(this IServiceCollection serviceCollection)
         {
-
+            serviceCollection.AddScoped<ITokenHandler, TokenHandler>();
         }
     }
 }
