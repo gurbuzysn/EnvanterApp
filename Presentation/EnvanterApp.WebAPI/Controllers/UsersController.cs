@@ -20,7 +20,10 @@ namespace EnvanterApp.WebAPI.Controllers
         {
             GeneralResponse<LoginUserQueryResponse> response = await _mediator.Send(loginUserQueryRequest);
 
-            return Ok();
+            if(!response.IsSuccess)
+                return Unauthorized(response);
+
+            return Ok(response);
         }
     }
 }
