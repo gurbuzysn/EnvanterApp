@@ -25,10 +25,10 @@ namespace EnvanterApp.Persistence.Context
                 Gender = Gender.Male,
                 DateOfBirth = new DateTime(1990,01,01),
                 UserName = "admin",
-                Email = "admin@envanterapp.com",
+                Email = "aaa",
                 EmailConfirmed = true
             };
-            await userManager.CreateAsync(adminUser, "123456");
+            await userManager.CreateAsync(adminUser, "bbb");
 
             AppRole adminRole = new AppRole()
             {

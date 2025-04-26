@@ -34,7 +34,7 @@ namespace EnvanterApp.Infrastructure.Services.Token
                 audience: _configuration["Token:Audience"],
                 claims: null,
                 expires: token.Expiration,
-                notBefore: DateTime.UtcNow,
+                notBefore: DateTime.Now,  //DateTime.UtcNow yapılacak.
                 signingCredentials: signingCredentials
                 );
 

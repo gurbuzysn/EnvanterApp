@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EnvanterApp.Persistence.Migrations
 {
     [DbContext(typeof(EnvanterAppDbContext))]
-    [Migration("20250423180341_First")]
+    [Migration("20250426053551_First")]
     partial class First
     {
         /// <inheritdoc />
