@@ -20,7 +20,12 @@ namespace EnvanterApp.Infrastructure.Services.Token
         }
         public Application.DTOs.Token CreateAccessToken()
         {
-            Application.DTOs.Token token = new();
+            var expiration = DateTime.UtcNow.AddMinutes(15);
+            Application.DTOs.Token token = new()
+            {
+                Expiration = expiration
+            };
+
             SymmetricSecurityKey securityKey = new(Encoding.UTF8.GetBytes(_configuration["Token:SecurityKey"]));
             SigningCredentials signingCredentials = new(securityKey, SecurityAlgorithms.HmacSha256);
 
@@ -36,7 +41,6 @@ namespace EnvanterApp.Infrastructure.Services.Token
             JwtSecurityTokenHandler tokenHandler = new();
             token.AccessToken = tokenHandler.WriteToken(securityToken);
             return token;
-
         }
     }
 }

@@ -35,7 +35,7 @@ namespace EnvanterApp.Application.Features.Queries.LoginUser
                 {
                     IsSuccess = false,
                     Message = "Kullanıcı veya şifre hatalı",
-                    Status = System.Net.HttpStatusCode.NotFound
+                    Status = System.Net.HttpStatusCode.Unauthorized
                 };
             }
 
