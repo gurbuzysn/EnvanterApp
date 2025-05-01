@@ -10,9 +10,7 @@ namespace EnvanterApp.Application.Features.Queries.LoginUser
 {
     public class LoginUserQueryRequest : IRequest<GeneralResponse<LoginUserQueryResponse>>
     {
-        [JsonPropertyName("UserName")]
         public string UserName { get; set; } = null!;
-        [JsonPropertyName("Password")]
         public string Password { get; set; } = null!;
     }
 }
