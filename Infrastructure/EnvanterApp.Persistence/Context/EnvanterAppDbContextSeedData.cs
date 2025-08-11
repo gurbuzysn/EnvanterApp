@@ -25,7 +25,7 @@ namespace EnvanterApp.Persistence.Context
                 Gender = Gender.Male,
                 DateOfBirth = new DateTime(1990,01,01),
                 UserName = "admin",
-                Email = "aaa",
+                Email = "vvv",
                 EmailConfirmed = true
             };
             await userManager.CreateAsync(adminUser, "bbb");
@@ -34,7 +34,14 @@ namespace EnvanterApp.Persistence.Context
             {
                 Name = "Admin"
             };
+
+            AppRole employeeRole = new AppRole()
+            {
+                Name = "Employee"
+            };
+
             await roleManager.CreateAsync(adminRole);
+            await roleManager.CreateAsync(employeeRole);
             await userManager.AddToRoleAsync(adminUser, "Admin");
             context.SaveChanges();
         }

@@ -16,6 +16,9 @@ namespace EnvanterApp.Domain.Entities.Identity
         public string FirstName { get; set; } = null!;
         public string LastName { get; set; } = null!;
         public string FullName => $"{FirstName} {LastName}";
+        public string PhoneNumber { get; set; } = null!;
+        public string Department { get; set; } = null!;
+        public DateTime HireDate { get; set; }
         public Gender Gender { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string? ImageUri { get; set; }

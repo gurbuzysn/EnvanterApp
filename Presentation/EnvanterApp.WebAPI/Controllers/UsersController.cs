@@ -24,9 +24,6 @@ namespace EnvanterApp.WebAPI.Controllers
                 return Unauthorized(response);
 
             return Ok(response);
-
-
-            ///TEST TEST TEST
         }
     }
 }
