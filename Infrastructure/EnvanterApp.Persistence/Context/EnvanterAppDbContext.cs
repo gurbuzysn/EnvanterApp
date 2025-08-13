@@ -12,13 +12,13 @@ using System.Threading.Tasks;
 
 namespace EnvanterApp.Persistence.Context
 {
-    public class EnvanterAppDbContext : IdentityDbContext<AppUser>
+    public class EnvanterAppDbContext : IdentityDbContext<Employee>
     {
         public EnvanterAppDbContext(DbContextOptions<EnvanterAppDbContext> options) : base(options) { }
 
         public DbSet<Admin> Admins { get; set; }
         public DbSet<Employee> Employees { get; set; }
-        public DbSet<AppUser> AppUsers { get; set; }
+        public DbSet<Employee> AppUsers { get; set; }
         public DbSet<AppRole> AppRoles { get; set; }
         public DbSet<Computer> Computers { get; set; }
         public DbSet<Keyboard> Keyboards { get; set; }

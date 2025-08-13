@@ -7,14 +7,14 @@ namespace EnvanterApp.Persistence.Context
 {
     public static class EnvanterAppDbContextSeedData
     {
-        public static async Task SeedData(EnvanterAppDbContext context, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
+        public static async Task SeedData(EnvanterAppDbContext context, UserManager<Employee> userManager, RoleManager<AppRole> roleManager)
         {
             await context.Database.MigrateAsync();
 
             if (await context.AppUsers.AnyAsync() || await context.Roles.AnyAsync())
                 return;
 
-            AppUser adminUser = new AppUser()
+            Employee adminUser = new Employee()
             {
                 Id = Guid.NewGuid(),
                 Status = Status.Active,

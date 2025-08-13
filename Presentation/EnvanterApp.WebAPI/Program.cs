@@ -77,7 +77,7 @@ namespace EnvanterApp.WebAPI
             using (var scope = app.Services.CreateScope())
             {
                 var context = scope.ServiceProvider.GetService<EnvanterAppDbContext>();
-                var userManager = scope.ServiceProvider.GetService<UserManager<AppUser>>();
+                var userManager = scope.ServiceProvider.GetService<UserManager<Employee>>();
                 var roleManager = scope.ServiceProvider.GetService<RoleManager<AppRole>>();
 
                 await EnvanterAppDbContextSeedData.SeedData(context, userManager, roleManager);

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EnvanterApp.Domain.Entities.Items
+namespace EnvanterApp.Domain.Entities
 {
-    public class BaseItem
+    public class BaseEntity
     {
         public Guid Id { get; set; }
         public Status Status { get; set; }
