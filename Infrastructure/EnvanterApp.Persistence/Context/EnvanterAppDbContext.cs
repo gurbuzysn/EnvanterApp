@@ -1,5 +1,6 @@
-﻿using EnvanterApp.Domain.Entities.Identity;
-using EnvanterApp.Domain.Entities.Items;
+﻿using EnvanterApp.Domain.Entities;
+using EnvanterApp.Domain.Entities.Identity;
+using EnvanterApp.Domain.Enums;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -16,12 +17,9 @@ namespace EnvanterApp.Persistence.Context
     {
         public EnvanterAppDbContext(DbContextOptions<EnvanterAppDbContext> options) : base(options) { }
 
-        public DbSet<Admin> Admins { get; set; }
         public DbSet<Employee> Employees { get; set; }
-        public DbSet<Employee> AppUsers { get; set; }
         public DbSet<AppRole> AppRoles { get; set; }
-        public DbSet<Computer> Computers { get; set; }
-        public DbSet<Keyboard> Keyboards { get; set; }
-        public DbSet<Mouse> Mouses { get; set; }
+        public DbSet<Item> Items { get; set; }
+        public DbSet<Assignment> Assignments { get; set; }
     }
 }

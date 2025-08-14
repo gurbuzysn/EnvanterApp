@@ -11,7 +11,7 @@ namespace EnvanterApp.Persistence.Context
         {
             await context.Database.MigrateAsync();
 
-            if (await context.AppUsers.AnyAsync() || await context.Roles.AnyAsync())
+            if (await context.Employees.AnyAsync() || await context.Roles.AnyAsync())
                 return;
 
             Employee adminUser = new Employee()
