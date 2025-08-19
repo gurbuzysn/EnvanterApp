@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EnvanterApp.Persistence.Migrations
 {
     [DbContext(typeof(EnvanterAppDbContext))]
-    [Migration("20250819031812_First")]
-    partial class First
+    [Migration("20250819033135_add-migration First")]
+    partial class addmigrationFirst
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

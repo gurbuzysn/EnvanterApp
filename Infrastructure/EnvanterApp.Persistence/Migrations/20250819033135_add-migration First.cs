@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EnvanterApp.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class First : Migration
+    public partial class addmigrationFirst : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

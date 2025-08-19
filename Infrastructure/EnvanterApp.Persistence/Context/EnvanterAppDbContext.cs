@@ -20,7 +20,8 @@ namespace EnvanterApp.Persistence.Context
 
         public DbSet<Employee> Employees { get; set; }
         public DbSet<AppRole> AppRoles { get; set; }
-        public DbSet<Item> Items { get; set; }
         public DbSet<Assignment> Assignments { get; set; }
+        public DbSet<Item> Items { get; set; }
+        public DbSet<Category> Categories { get; set; }
     }
 }
