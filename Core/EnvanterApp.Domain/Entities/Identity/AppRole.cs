@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EnvanterApp.Domain.Entities.Identity
 {
-    public class AppRole : IdentityRole
+    public class AppRole : IdentityRole<Guid>
     {
 
     }

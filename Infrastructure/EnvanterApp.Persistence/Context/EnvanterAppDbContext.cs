@@ -1,6 +1,7 @@
 ﻿using EnvanterApp.Domain.Entities;
 using EnvanterApp.Domain.Entities.Identity;
 using EnvanterApp.Domain.Enums;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace EnvanterApp.Persistence.Context
 {
-    public class EnvanterAppDbContext : IdentityDbContext<Employee>
+    public class EnvanterAppDbContext : IdentityDbContext<Employee, AppRole, Guid>
     {
         public EnvanterAppDbContext(DbContextOptions<EnvanterAppDbContext> options) : base(options) { }
 

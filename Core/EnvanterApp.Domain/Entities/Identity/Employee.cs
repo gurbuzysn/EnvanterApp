@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace EnvanterApp.Domain.Entities.Identity
 {
-    public class Employee : IdentityUser
+    public class Employee : IdentityUser<Guid>
     {
         public Guid Id { get; set; }
         public Status Status { get; set; }
