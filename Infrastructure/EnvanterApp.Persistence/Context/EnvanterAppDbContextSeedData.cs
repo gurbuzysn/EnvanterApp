@@ -24,6 +24,7 @@ namespace EnvanterApp.Persistence.Context
                 LastName = "",
                 Gender = Gender.Male,
                 DateOfBirth = new DateTime(1990,01,01),
+                Department = Department.Idare,
                 UserName = "admin",
                 Email = "vvv",
                 EmailConfirmed = true
