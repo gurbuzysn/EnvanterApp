@@ -3,13 +3,7 @@ using EnvanterApp.Application.DTOs;
 using EnvanterApp.Domain.Entities.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace EnvanterApp.Application.Features.Queries.LoginUser
 {
@@ -52,7 +46,12 @@ namespace EnvanterApp.Application.Features.Queries.LoginUser
                 };
 
             }
-            return new GeneralResponse<LoginUserQueryResponse>() { IsSuccess = false, Message = "Kullanıcı adı veya şifre hatalı", Status = System.Net.HttpStatusCode.NotFound};
+            return new GeneralResponse<LoginUserQueryResponse>()
+            {
+                IsSuccess = false,
+                Message = "Kullanıcı adı veya şifre hatalı",
+                Status = System.Net.HttpStatusCode.NotFound
+            };
         }
     }
 }

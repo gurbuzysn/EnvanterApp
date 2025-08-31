@@ -5,12 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EnvanterApp.WebAPI.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    [Route("api/[controller]")]
+    public class AuthController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public UsersController(IMediator mediator)
+        public AuthController(IMediator mediator)
         {
             _mediator = mediator;
         }
