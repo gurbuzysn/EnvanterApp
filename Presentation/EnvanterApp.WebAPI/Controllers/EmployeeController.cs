@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using EnvanterApp.Application.Features.Queries.GetEmployees;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EnvanterApp.WebAPI.Controllers
@@ -18,8 +19,9 @@ namespace EnvanterApp.WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetEmployees()
         {
+            var employees = await _mediator.Send(new GetEmployeesQueryRequest());
 
-            return Ok();
+            return Ok(employees);
         }
     }
 }
