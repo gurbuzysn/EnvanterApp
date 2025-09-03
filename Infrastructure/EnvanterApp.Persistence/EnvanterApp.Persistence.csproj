@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\EnvanterApp.Application\EnvanterApp.Application.csproj" />
     <ProjectReference Include="..\..\Core\EnvanterApp.Domain\EnvanterApp.Domain.csproj" />
   </ItemGroup>
 

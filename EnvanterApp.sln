@@ -16,6 +16,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnvanterApp.Infrastructure", "Infrastructure\EnvanterApp.Infrastructure\EnvanterApp.Infrastructure.csproj", "{B35F55B8-3EA2-479F-B6C5-F09DE1D394A6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnvanterApp.Persistence", "Infrastructure\EnvanterApp.Persistence\EnvanterApp.Persistence.csproj", "{699648A1-3DBA-44AB-B990-E691870BD07E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CF178E63-78CC-4CF9-A41B-707E61845D73} = {CF178E63-78CC-4CF9-A41B-707E61845D73}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnvanterApp.WebAPI", "Presentation\EnvanterApp.WebAPI\EnvanterApp.WebAPI.csproj", "{9F9CD04C-083D-4747-B528-A1BCD44263D0}"
 EndProject

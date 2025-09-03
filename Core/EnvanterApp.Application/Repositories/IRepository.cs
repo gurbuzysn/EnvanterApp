@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EnvanterApp.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +8,7 @@ using System.Threading.Tasks;
 
 namespace EnvanterApp.Application.Repositories
 {
-    public interface IRepository<T> where T : class
+    public interface IRepository<T> where T : BaseEntity
     {
-        DbSet<T> Table { get; }
     }
 }
