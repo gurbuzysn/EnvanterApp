@@ -14,13 +14,10 @@ namespace EnvanterApp.WebAPI.Controllers
             _mediator = mediator;
         }
 
-
-
         [HttpGet]
         public async Task<IActionResult> GetEmployees()
-        {
+       {
             var employees = await _mediator.Send(new GetEmployeesQueryRequest());
-
             return Ok(employees);
         }
     }

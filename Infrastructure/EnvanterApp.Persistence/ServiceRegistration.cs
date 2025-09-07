@@ -1,5 +1,7 @@
-﻿using EnvanterApp.Domain.Entities.Identity;
+﻿using EnvanterApp.Application.Repositories;
+using EnvanterApp.Domain.Entities.Identity;
 using EnvanterApp.Persistence.Context;
+using EnvanterApp.Persistence.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -26,6 +28,8 @@ namespace EnvanterApp.Persistence
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
             }).AddEntityFrameworkStores<EnvanterAppDbContext>().AddDefaultTokenProviders();
+            services.AddScoped(typeof(IReadRepository<>), typeof(ReadRepository<>));
+            services.AddScoped(typeof(IWriteRepository<>), typeof(WriteRepository<>));
         }
     }
 }
