@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EnvanterApp.Application.Features.Queries.GetEmployees
 {
-    public class GetEmployeesQueryRequest : IRequest<List<Employee>>
+    public class GetEmployeesQueryRequest : IRequest<List<GetEmployeesQueryResponse>>
     {
     }
 }
