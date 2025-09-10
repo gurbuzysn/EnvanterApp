@@ -16,7 +16,7 @@ namespace EnvanterApp.WebAPI.Controllers
 
         [HttpGet]
         public async Task<IActionResult> GetEmployees()
-       {
+        {
             var employees = await _mediator.Send(new GetEmployeesQueryRequest());
             return Ok(employees);
         }

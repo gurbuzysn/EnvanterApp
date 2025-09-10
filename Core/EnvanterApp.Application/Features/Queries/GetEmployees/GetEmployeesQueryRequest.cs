@@ -1,4 +1,5 @@
-﻿using EnvanterApp.Domain.Entities.Identity;
+﻿using EnvanterApp.Application.DTOs;
+using EnvanterApp.Domain.Entities.Identity;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EnvanterApp.Application.Features.Queries.GetEmployees
 {
-    public class GetEmployeesQueryRequest : IRequest<List<GetEmployeesQueryResponse>>
+    public class GetEmployeesQueryRequest : IRequest<GeneralResponse<List<GetEmployeesQueryResponse>>>
     {
     }
 }

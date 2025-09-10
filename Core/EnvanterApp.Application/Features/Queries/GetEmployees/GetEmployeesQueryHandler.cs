@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
+using EnvanterApp.Application.DTOs;
 using EnvanterApp.Application.Repositories;
 using EnvanterApp.Domain.Entities.Identity;
 using MediatR;
 
 namespace EnvanterApp.Application.Features.Queries.GetEmployees
 {
-    public class GetEmployeesQueryHandler : IRequestHandler<GetEmployeesQueryRequest, List<GetEmployeesQueryResponse>>
+    public class GetEmployeesQueryHandler : IRequestHandler<GetEmployeesQueryRequest, GeneralResponse<List<GetEmployeesQueryResponse>>
     {
         private readonly IReadRepository<Employee> _readRepository;
         private readonly IMapper _mapper;
@@ -14,15 +15,37 @@ namespace EnvanterApp.Application.Features.Queries.GetEmployees
         {
             _readRepository = readRepository;
             _mapper = mapper;
+
         }
-
-        public async Task<List<GetEmployeesQueryResponse>> Handle(GetEmployeesQueryRequest request, CancellationToken cancellationToken)
+        public async Task<GeneralResponse<List<GetEmployeesQueryResponse>>> Handle(GetEmployeesQueryRequest request, CancellationToken cancellationToken)
         {
-            var allEmployees = _readRepository.GetAll().ToList();
+            var generalResponse = new GeneralResponse<List<GetEmployeesQueryResponse>>();
+            try
+            {
+                var allEmployees = _readRepository.GetAll().ToList();
+                var dtoAllEmployees = _mapper.Map<List<Employee>, List<GetEmployeesQueryResponse>>(allEmployees);
 
-            var dtoAllEmployees = _mapper.Map<List<GetEmployeesQueryResponse>>(allEmployees);
+                generalResponse.IsSuccess = true;
+                generalResponse.Message = "Employee listesi başarıyla getirildi.";
+                generalResponse.Result = dtoAllEmployees;
 
-            return dtoAllEmployees;
+                return generalResponse;
+            }
+            catch (Exception ex)
+            {
+                generalResponse.IsSuccess = false;
+                generalResponse.Message = ex.Message;
+
+
+                // TO DO: Burada loglama işlemi yapalılacak
+
+                return generalResponse;
+            }
         }
     }
 }
+
+
+
+
+
