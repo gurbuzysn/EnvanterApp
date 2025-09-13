@@ -29,7 +29,6 @@ namespace EnvanterApp.Application.Features.Queries.LoginUser
                 {
                     IsSuccess = false,
                     Message = "Kullanıcı veya şifre hatalı",
-                    Status = System.Net.HttpStatusCode.Unauthorized
                 };
             }
 
@@ -41,7 +40,6 @@ namespace EnvanterApp.Application.Features.Queries.LoginUser
                 return new GeneralResponse<LoginUserQueryResponse>()
                 {
                     IsSuccess = true,
-                    Status = System.Net.HttpStatusCode.OK,
                     Result = new LoginUserQueryResponse() { Token = token }
                 };
 
@@ -50,7 +48,6 @@ namespace EnvanterApp.Application.Features.Queries.LoginUser
             {
                 IsSuccess = false,
                 Message = "Kullanıcı adı veya şifre hatalı",
-                Status = System.Net.HttpStatusCode.NotFound
             };
         }
     }

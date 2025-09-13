@@ -6,7 +6,12 @@ using EnvanterApp.Persistence.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
+using Serilog.Core;
 using System.Text;
+using Serilog.Sinks.MSSqlServer;
+using System.Collections.ObjectModel;
+
 
 
 namespace EnvanterApp.WebAPI
@@ -58,21 +63,32 @@ namespace EnvanterApp.WebAPI
 
             builder.Services.AddSwaggerGen();
 
+            Logger log = new LoggerConfiguration()
+                .WriteTo.Console()
+                .WriteTo.File("logs/log.txt")
+                .WriteTo.MSSqlServer(
+                    connectionString: builder.Configuration.GetConnectionString("DefaultConnection"),
+                    sinkOptions: new MSSqlServerSinkOptions
+                    {
+                        TableName = "Logs",
+                        AutoCreateSqlTable = true
+                    })
+                .Enrich.FromLogContext()
+                .MinimumLevel.Information()
+                .CreateLogger();
+
+            builder.Host.UseSerilog(log);
 
             var app = builder.Build();
-
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
             app.UseHttpsRedirection();
-
             app.UseCors("AllowAll");
-
             app.UseAuthentication();
             app.UseAuthorization();
-
             app.MapControllers();
 
             using (var scope = app.Services.CreateScope())
