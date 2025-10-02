@@ -44,7 +44,7 @@ namespace EnvanterApp.Persistence.Context
             await roleManager.CreateAsync(adminRole);
             await roleManager.CreateAsync(employeeRole);
             await userManager.AddToRoleAsync(adminUser, "Admin");
-            context.SaveChanges();
+            //await context.SaveChanges();
         }
     }
 }
