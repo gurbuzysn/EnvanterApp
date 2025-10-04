@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace EnvanterApp.WebAPI.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/[controller]")] 
     public class AuthController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -22,7 +22,6 @@ namespace EnvanterApp.WebAPI.Controllers
 
             if(!response.IsSuccess)
                 return Unauthorized(response);
-
             return Ok(response);
         }
     }
