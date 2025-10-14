@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EnvanterApp.Application.Features.Commands.Employees;
 using EnvanterApp.Application.Features.Queries.GetEmployees;
 using EnvanterApp.Domain.Entities.Identity;
 using System;
@@ -14,6 +15,7 @@ namespace EnvanterApp.Application.Mappings
         public EmployeeProfile()
         {
             CreateMap<Employee, GetEmployeesQueryResponse>();
+            CreateMap<AddEmployeeCommandRequest, Employee>();
         }
     }
 }

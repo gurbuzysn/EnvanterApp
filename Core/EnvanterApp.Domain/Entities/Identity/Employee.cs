@@ -13,12 +13,13 @@ namespace EnvanterApp.Domain.Entities.Identity
         public Guid? ModifiedBy { get; set; }
         public DateTime? DeletedDate { get; set; }
         public Guid? DeletedBy { get; set; }
-        public string FirstName { get; set; } = null!;
-        public string LastName { get; set; } = null!;
-        public Department Department { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Department { get; set; }
+        public string Title { get; set; }
         public DateTime HireDate { get; set; }
-        public Gender Gender { get; set; }
-        public DateTime DateOfBirth { get; set; }
         public string? ImageUri { get; set; }
 
         public ICollection<Assignment> Assignments { get; set; }

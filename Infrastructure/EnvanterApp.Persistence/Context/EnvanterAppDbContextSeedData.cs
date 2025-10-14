@@ -22,9 +22,7 @@ namespace EnvanterApp.Persistence.Context
                 CreatedBy = Guid.NewGuid(),
                 FirstName = "Admin",
                 LastName = "",
-                Gender = Gender.Male,
-                DateOfBirth = new DateTime(1990,01,01),
-                Department = Department.Idare,
+                Department = "İdare",
                 UserName = "admin",
                 Email = "admin@envanterapp.com",
                 EmailConfirmed = true
