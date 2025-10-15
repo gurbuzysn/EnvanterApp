@@ -23,7 +23,7 @@ namespace EnvanterApp.WebAPI
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddApplicationServices();
-            builder.Services.AddInfrastructureServices();
+            builder.Services.AddInfrastructureServices(builder.Configuration);
             builder.Services.AddPersistenceServices(builder.Configuration);
 
             //Cors ayarlarý daha sonra revize edilerek kýsýtlanacak.

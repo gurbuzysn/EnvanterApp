@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using EnvanterApp.Application.Abstractions.Minio;
 using EnvanterApp.Application.DTOs;
 using EnvanterApp.Application.Repositories;
 using EnvanterApp.Domain.Entities.Identity;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,18 +17,21 @@ namespace EnvanterApp.Application.Features.Commands.Employees
     {
         private readonly IWriteRepository<Employee> _repository;
         private readonly IMapper _mapper;
+        private readonly ILogger<AddEmployeCommandHandler> _logger;
+        private readonly IMinioService _minioService;
 
-        public AddEmployeCommandHandler(IWriteRepository<Employee> repository, IMapper mapper)
+        public AddEmployeCommandHandler(IWriteRepository<Employee> repository, IMapper mapper, ILogger<AddEmployeCommandHandler> logger, IMinioService minioService)
         {
             _repository = repository;
             _mapper = mapper;
+            _logger = logger;
+            _minioService = minioService;
         }
 
         public async Task<GeneralResponse<AddEmployeeCommandResponse>> Handle(AddEmployeeCommandRequest request, CancellationToken cancellationToken)
         {
-
-            //Amaç => Gelen Personeli veritabanına kaydetmek.
-
+            // Transaction işlemleri yapılacak
+            var result = new GeneralResponse<AddEmployeeCommandResponse>();
             try
             {
                 var employee = _mapper.Map<Employee>(request);
@@ -34,35 +39,38 @@ namespace EnvanterApp.Application.Features.Commands.Employees
                 employee.CreatedDate = DateTime.Now;
                 employee.CreatedBy = Guid.Empty;
 
-                var result = await _repository.AddAsync(employee);
-                await _repository.SaveAsync();
 
-
-
-                return new GeneralResponse<AddEmployeeCommandResponse>
+                if(request.ProfileImage != null && request.ProfileImage.Length > 0)
                 {
-                    IsSuccess = true,
-                    Message = result ? "Personel Ekleme İşlemi Başarılı" : "Personel Ekleme İşlemi Başarısız",
-                    Result = _mapper.Map<AddEmployeeCommandResponse>(employee),
-                    StatusCode = System.Net.HttpStatusCode.OK
-                };
+                    string imageUrl = await _minioService.UploadFileAsync(request.ProfileImage, "Profile_Images");
+                    employee.ImageUri = imageUrl;
+                }
 
+                await _repository.AddAsync(employee);
+                var saveResult = await _repository.SaveAsync();
+
+                if(saveResult > 0)
+                {
+                    result.IsSuccess = true;
+                    result.Message = "Personel ekleme işlemi başarılı";
+                    result.StatusCode = System.Net.HttpStatusCode.OK;
+                    return result;
+                }
+
+                result.IsSuccess = false;
+                result.Message = "Personel ekleme işlemi sırasında bir hata oluştu!";
+                result.StatusCode = System.Net.HttpStatusCode.InternalServerError;
+                return result;
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Personel ekleme sırasında sistemsel hata: {Message}", ex.Message);
 
-                throw;
+                result.IsSuccess = false;
+                result.Message = "Personel ekleme işlemi sırasında bir hata oluştu!";
+                result.StatusCode = System.Net.HttpStatusCode.InternalServerError;
+                return result;
             }
-
-            
-
-           
-
-
-
-
-
-
         }
     }
 }

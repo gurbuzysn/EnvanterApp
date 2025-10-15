@@ -1,10 +1,6 @@
 ﻿using EnvanterApp.Application.DTOs;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace EnvanterApp.Application.Features.Commands.Employees
 {
@@ -15,6 +11,7 @@ namespace EnvanterApp.Application.Features.Commands.Employees
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string Department { get; set; }
-        public string Position { get; set; }
+        public string Title { get; set; }
+        public IFormFile ProfileImage { get; set; }
     }
 }
