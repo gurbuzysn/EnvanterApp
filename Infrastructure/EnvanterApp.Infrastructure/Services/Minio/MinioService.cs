@@ -26,48 +26,32 @@ namespace EnvanterApp.Infrastructure.Services.Minio
                         .WithCredentials(accessKey, secretKey)
                         .WithSSL(useSSL)
                         .Build();
-
-
-
         }
-
-
 
         public async Task<string> UploadFileAsync(string bucketName, IFormFile file)
         {
-            //bool found = await _minioClient.BucketExistsAsync(new BucketExistsArgs().WithBucket(bucketName));
+            bool found = await _minioClient.BucketExistsAsync(new BucketExistsArgs().WithBucket(bucketName));
 
+            if (!found)
+                await _minioClient.MakeBucketAsync(new MakeBucketArgs().WithBucket(bucketName));
 
-            //            if (!found)
-            //                await _minioClient.MakeBucketAsync(new MakeBucketArgs().WithBucket(bucketName));
+            string fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
 
-            //            string fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
+            using (var stream = file.OpenReadStream())
+            {
+                await _minioClient.PutObjectAsync(new PutObjectArgs()
+                    .WithBucket(bucketName)
+                    .WithObject(fileName)
+                    .WithStreamData(stream)
+                    .WithObjectSize(file.Length)
+                    .WithContentType(file.ContentType));
+            }
 
-            //            using (var stream = file.OpenReadStream())
-            //            {
-            //                await _minioClient.PutObjectAsync(new PutObjectArgs()
-            //                    .WithBucket(bucketName)
-            //                    .WithObject(fileName)
-            //                    .WithStreamData(stream)
-            //                    .WithObjectSize(file.Length)
-            //                    .WithContentType(file.ContentType));
-            //            }
-
-            //            return $"http://localhost:9000/{bucketName}/{fileName}";
-
-            var aaa = "AbidikGubidik";
-
-            return aaa;
-
+            return $"http://localhost:9000/{bucketName}/{fileName}";
         }
-
-
-
-
         public Task RemoveFileAsync(string bucketName, string fileUrl)
         {
             throw new NotImplementedException();
         }
-
     }
 }
