@@ -40,9 +40,9 @@ namespace EnvanterApp.Application.Features.Commands.Employees
                 employee.CreatedBy = Guid.Empty;
 
 
-                if(request.ProfileImage != null && request.ProfileImage.Length > 0)
+                if (request.ProfileImage != null && request.ProfileImage.Length > 0)
                 {
-                    string imageUrl = await _minioService.UploadFileAsync(request.ProfileImage, "Profile_Images");
+                    string imageUrl = await _minioService.UploadFileAsync("Profile_Images", request.ProfileImage);
                     employee.ImageUri = imageUrl;
                 }
 

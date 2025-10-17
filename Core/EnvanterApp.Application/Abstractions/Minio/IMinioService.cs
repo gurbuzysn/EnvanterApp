@@ -9,6 +9,7 @@ namespace EnvanterApp.Application.Abstractions.Minio
 {
     public interface IMinioService
     {
-        Task<string> UploadFileAsync(IFormFile file, string bucketName);
+        Task<string> UploadFileAsync(string bucketName, IFormFile file);
+        Task RemoveFileAsync(string bucketName, string fileUrl);
     }
 }
