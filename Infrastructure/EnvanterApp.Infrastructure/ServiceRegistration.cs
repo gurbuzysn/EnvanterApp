@@ -4,6 +4,7 @@ using EnvanterApp.Infrastructure.Services.Minio;
 using EnvanterApp.Infrastructure.Services.Token;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Minio;
 
 namespace EnvanterApp.Infrastructure
 {

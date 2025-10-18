@@ -42,7 +42,7 @@ namespace EnvanterApp.Application.Features.Commands.Employees
 
                 if (request.ProfileImage != null && request.ProfileImage.Length > 0)
                 {
-                    string imageUrl = await _minioService.UploadFileAsync("Profile_Images", request.ProfileImage);
+                    string imageUrl = await _minioService.UploadFileAsync("profile-images", request.ProfileImage);
                     employee.ImageUri = imageUrl;
                 }
 

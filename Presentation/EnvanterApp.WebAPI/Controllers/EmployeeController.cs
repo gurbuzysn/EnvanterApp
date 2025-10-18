@@ -26,10 +26,18 @@ namespace EnvanterApp.WebAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> AddEmployee(AddEmployeeCommandRequest addEmployeeCommandRequest)
         {
-            var result = await _mediator.Send(addEmployeeCommandRequest);
+            try
+            {
+                var result = await _mediator.Send(addEmployeeCommandRequest);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
            
 
-            return Ok(result);
+            return Ok();
         }
 
     }

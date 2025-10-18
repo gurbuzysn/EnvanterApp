@@ -3,11 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Minio;
 using Minio.DataModel.Args;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EnvanterApp.Infrastructure.Services.Minio
 {
@@ -22,10 +17,10 @@ namespace EnvanterApp.Infrastructure.Services.Minio
             var secretKey = configuration["Minio:SecretKey"];
             var useSSL = bool.Parse(configuration["Minio:UseSSL"] ?? "false");
 
-            _minioClient.WithEndpoint(endpoint)
-                        .WithCredentials(accessKey, secretKey)
-                        .WithSSL(useSSL)
-                        .Build();
+            _minioClient = (MinioClient)new MinioClient().WithEndpoint(endpoint)
+                                       .WithCredentials(accessKey, secretKey)
+                                       .WithSSL(useSSL)
+                                       .Build();
         }
 
         public async Task<string> UploadFileAsync(string bucketName, IFormFile file)

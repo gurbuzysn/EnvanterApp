@@ -12,6 +12,6 @@ namespace EnvanterApp.Application.Features.Commands.Employees
         public string PhoneNumber { get; set; }
         public string Department { get; set; }
         public string Title { get; set; }
-        public IFormFile ProfileImage { get; set; }
+        public IFormFile? ProfileImage { get; set; }
     }
 }
