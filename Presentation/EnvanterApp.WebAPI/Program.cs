@@ -11,8 +11,6 @@ using Serilog.Core;
 using Serilog.Sinks.MSSqlServer;
 using System.Text;
 
-
-
 namespace EnvanterApp.WebAPI
 {
     public class Program

@@ -8,5 +8,9 @@ namespace EnvanterApp.Application.Features.Commands.Employees
 {
     public class AddEmployeeCommandResponse
     {
+        public AddEmployeeCommandResponse()
+        {
+            
+        }
     }
 }

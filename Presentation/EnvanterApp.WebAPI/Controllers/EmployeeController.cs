@@ -21,24 +21,12 @@ namespace EnvanterApp.WebAPI.Controllers
             var employees = await _mediator.Send(new GetEmployeesQueryRequest());
             return Ok(employees);
         }
-
-
+        
         [HttpPost]
         public async Task<IActionResult> AddEmployee(AddEmployeeCommandRequest addEmployeeCommandRequest)
         {
-            try
-            {
-                var result = await _mediator.Send(addEmployeeCommandRequest);
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-           
-
-            return Ok();
+            var result = await _mediator.Send(addEmployeeCommandRequest);
+            return Ok(result);
         }
-
     }
 }
