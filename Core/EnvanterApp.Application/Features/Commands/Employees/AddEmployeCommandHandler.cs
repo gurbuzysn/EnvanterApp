@@ -39,6 +39,7 @@ namespace EnvanterApp.Application.Features.Commands.Employees
                 employee.Status = Domain.Enums.Status.Active;
                 employee.CreatedDate = DateTime.Now;
                 employee.CreatedBy = Guid.Empty;
+                employee.UserName = employee.Email;
 
 
                 if (request.ProfileImage != null && request.ProfileImage.Length > 0)

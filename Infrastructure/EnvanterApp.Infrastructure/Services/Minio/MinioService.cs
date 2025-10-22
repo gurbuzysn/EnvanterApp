@@ -17,18 +17,11 @@ namespace EnvanterApp.Infrastructure.Services.Minio
             var secretKey = configuration["Minio:SecretKey"];
             var useSSL = bool.Parse(configuration["Minio:UseSSL"] ?? "false");
 
-            //_minioClient = (MinioClient)new MinioClient().WithEndpoint(endpoint)
-            //                           .WithCredentials(accessKey, secretKey)
-            //                           .WithSSL(useSSL)
-            //                           .Build();
-
-
             _minioClient = (MinioClient)minioClient
                                             .WithEndpoint(endpoint)
                                             .WithCredentials(accessKey, secretKey)
                                             .WithSSL(useSSL)
                                             .Build();
-
         }
 
         public async Task<string> UploadFileAsync(string bucketName, IFormFile file)
