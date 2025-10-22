@@ -14,7 +14,8 @@ namespace EnvanterApp.Application.Validators.Employees
         {
             RuleFor(x => x.FirstName)
                 .NotEmpty().WithMessage("İsim alanı boş bırakılamaz.")
-                .MaximumLength(50).WithMessage("İsim alanı en fazla 50 karakter olabilir.");
+                .MaximumLength(50).WithMessage("İsim alanı en fazla 50 karakter olabilir.")
+                .MinimumLength(3).WithMessage("İsim alanı en az 3 karakter olmalıdır.");
 
             RuleFor(x => x.LastName)
                 .NotEmpty().WithMessage("Soyisim alanı boş bırakılamaz.")

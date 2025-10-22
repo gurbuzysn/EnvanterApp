@@ -1,8 +1,10 @@
 using EnvanterApp.Application;
+using EnvanterApp.Application.Validators.Employees;
 using EnvanterApp.Domain.Entities.Identity;
 using EnvanterApp.Infrastructure;
 using EnvanterApp.Persistence;
 using EnvanterApp.Persistence.Context;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
@@ -51,7 +53,9 @@ namespace EnvanterApp.WebAPI
                 };
             });
 
-            builder.Services.AddControllers().AddJsonOptions(options =>
+            builder.Services.AddControllers()
+                            .AddFluentValidation(configuration => configuration.RegisterValidatorsFromAssemblyContaining<AddEmployeeValidator>())
+                            .AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.PropertyNamingPolicy = null;
                 options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;

@@ -4,6 +4,7 @@ using EnvanterApp.Application.DTOs;
 using EnvanterApp.Application.Repositories;
 using EnvanterApp.Domain.Entities.Identity;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -15,14 +16,14 @@ namespace EnvanterApp.Application.Features.Commands.Employees
 {
     public class AddEmployeCommandHandler : IRequestHandler<AddEmployeeCommandRequest, GeneralResponse<AddEmployeeCommandResponse>>
     {
-        private readonly IWriteRepository<Employee> _repository;
+        private readonly UserManager<Employee> _userManager;
         private readonly IMapper _mapper;
         private readonly ILogger<AddEmployeCommandHandler> _logger;
         private readonly IMinioService _minioService;
 
-        public AddEmployeCommandHandler(IWriteRepository<Employee> repository, IMapper mapper, ILogger<AddEmployeCommandHandler> logger, IMinioService minioService)
+        public AddEmployeCommandHandler(UserManager<Employee> userManager, IMapper mapper, ILogger<AddEmployeCommandHandler> logger, IMinioService minioService)
         {
-            _repository = repository;
+            _userManager = userManager;
             _mapper = mapper;
             _logger = logger;
             _minioService = minioService;
@@ -46,10 +47,9 @@ namespace EnvanterApp.Application.Features.Commands.Employees
                     employee.ImageUri = imageUrl;
                 }
 
-                await _repository.AddAsync(employee);
-                var saveResult = await _repository.SaveAsync();
+                var identityResult = await _userManager.CreateAsync(employee, "123456");
 
-                if(saveResult > 0)
+                if(identityResult.Succeeded)
                 {
                     result.IsSuccess = true;
                     result.Message = "Personel ekleme işlemi başarılı";
