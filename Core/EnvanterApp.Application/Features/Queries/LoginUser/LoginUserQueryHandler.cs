@@ -21,7 +21,7 @@ namespace EnvanterApp.Application.Features.Queries.LoginUser
         }
         public async Task<GeneralResponse<LoginUserQueryResponse>> Handle(LoginUserQueryRequest request, CancellationToken cancellationToken)
         {
-            Employee user = await _userManager.FindByEmailAsync(request.UserName);
+            Employee user = await _userManager.FindByNameAsync(request.UserName);
 
             if (user == null)
             {

@@ -65,21 +65,21 @@ namespace EnvanterApp.WebAPI
 
             builder.Services.AddSwaggerGen();
 
-            Logger log = new LoggerConfiguration()
-                .WriteTo.Console()
-                .WriteTo.File("logs/log.txt")
-                .WriteTo.MSSqlServer(
-                    connectionString: builder.Configuration.GetConnectionString("DefaultConnection"),
-                    sinkOptions: new MSSqlServerSinkOptions
-                    {
-                        TableName = "Logs",
-                        AutoCreateSqlTable = true
-                    })
-                .Enrich.FromLogContext()
-                .MinimumLevel.Information()
-                .CreateLogger();
+            //Logger log = new LoggerConfiguration()
+            //    .WriteTo.Console()
+            //    .WriteTo.File("logs/log.txt")
+            //    .WriteTo.MSSqlServer(
+            //        connectionString: builder.Configuration.GetConnectionString("DefaultConnection"),
+            //        sinkOptions: new MSSqlServerSinkOptions
+            //        {
+            //            TableName = "Logs",
+            //            AutoCreateSqlTable = true
+            //        })
+            //    .Enrich.FromLogContext()
+            //    .MinimumLevel.Information()
+            //    .CreateLogger();
 
-            builder.Host.UseSerilog(log);
+            //builder.Host.UseSerilog(log);
 
             var app = builder.Build();
             if (app.Environment.IsDevelopment())

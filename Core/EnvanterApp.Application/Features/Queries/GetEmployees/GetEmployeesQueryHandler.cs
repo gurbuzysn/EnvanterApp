@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using EnvanterApp.Application.Abstractions.Minio;
 using EnvanterApp.Application.DTOs;
 using EnvanterApp.Application.Repositories;
 using EnvanterApp.Domain.Entities.Identity;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 
 namespace EnvanterApp.Application.Features.Queries.GetEmployees
 {
@@ -12,12 +14,14 @@ namespace EnvanterApp.Application.Features.Queries.GetEmployees
         private readonly IReadRepository<Employee> _readRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<GetEmployeesQueryHandler> _logger;
+        private readonly IMinioService _minioService;
 
-        public GetEmployeesQueryHandler(IReadRepository<Employee> readRepository, IMapper mapper, ILogger<GetEmployeesQueryHandler> logger)
+        public GetEmployeesQueryHandler(IReadRepository<Employee> readRepository, IMapper mapper, ILogger<GetEmployeesQueryHandler> logger, IMinioService minioService)
         {
             _readRepository = readRepository;
             _mapper = mapper;
             _logger = logger;
+            _minioService = minioService;
         }
         public async Task<GeneralResponse<List<GetEmployeesQueryResponse>>> Handle(GetEmployeesQueryRequest request, CancellationToken cancellationToken)
         {
@@ -26,6 +30,13 @@ namespace EnvanterApp.Application.Features.Queries.GetEmployees
             {
                 var allEmployees = _readRepository.GetAll().ToList();
                 var dtoAllEmployees = _mapper.Map<List<Employee>, List<GetEmployeesQueryResponse>>(allEmployees);
+
+
+                foreach (var employee in dtoAllEmployees)
+                {
+                    if(!employee.ImageUri.IsNullOrEmpty())
+                        employee.ImageUri = await _minioService.GetFileAsBase64Async("profile-images", employee.ImageUri!);
+                }
 
                 generalResponse.IsSuccess = true;
                 generalResponse.Message = "Çalışanların listesi başarıyla getirildi.";

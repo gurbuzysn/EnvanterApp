@@ -14,6 +14,11 @@ namespace EnvanterApp.Persistence.Context
             if (await context.Employees.AnyAsync() || await context.Roles.AnyAsync())
                 return;
 
+            AppRole adminRole = new AppRole() { Name = "Admin" };
+            AppRole employeeRole = new AppRole() { Name = "Employee" };
+            await roleManager.CreateAsync(adminRole);
+            await roleManager.CreateAsync(employeeRole);
+
             Employee adminUser = new Employee()
             {
                 Id = Guid.NewGuid(),
@@ -23,24 +28,13 @@ namespace EnvanterApp.Persistence.Context
                 FirstName = "Admin",
                 LastName = "",
                 Department = "İdare",
-                UserName = "admin",
+                UserName = "admin@envanterapp.com",
                 Email = "admin@envanterapp.com",
+                Title = "Yönetici",
+                PhoneNumber = "5554443322",
                 EmailConfirmed = true
             };
             await userManager.CreateAsync(adminUser, "123456");
-
-            AppRole adminRole = new AppRole()
-            {
-                Name = "Admin"
-            };
-
-            AppRole employeeRole = new AppRole()
-            {
-                Name = "Employee"
-            };
-
-            await roleManager.CreateAsync(adminRole);
-            await roleManager.CreateAsync(employeeRole);
             await userManager.AddToRoleAsync(adminUser, "Admin");
         }
     }

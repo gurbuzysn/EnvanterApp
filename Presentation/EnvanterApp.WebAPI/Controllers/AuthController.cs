@@ -19,7 +19,6 @@ namespace EnvanterApp.WebAPI.Controllers
         public async Task<IActionResult> Login(LoginUserQueryRequest loginUserQueryRequest)
         {
             GeneralResponse<LoginUserQueryResponse> response = await _mediator.Send(loginUserQueryRequest);
-
             if(!response.IsSuccess)
                 return Unauthorized(response);
             return Ok(response);

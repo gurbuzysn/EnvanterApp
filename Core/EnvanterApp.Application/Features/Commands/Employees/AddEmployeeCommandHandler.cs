@@ -14,14 +14,14 @@ using System.Threading.Tasks;
 
 namespace EnvanterApp.Application.Features.Commands.Employees
 {
-    public class AddEmployeCommandHandler : IRequestHandler<AddEmployeeCommandRequest, GeneralResponse<AddEmployeeCommandResponse>>
+    public class AddEmployeeCommandHandler : IRequestHandler<AddEmployeeCommandRequest, GeneralResponse<AddEmployeeCommandResponse>>
     {
         private readonly UserManager<Employee> _userManager;
         private readonly IMapper _mapper;
-        private readonly ILogger<AddEmployeCommandHandler> _logger;
+        private readonly ILogger<AddEmployeeCommandHandler> _logger;
         private readonly IMinioService _minioService;
 
-        public AddEmployeCommandHandler(UserManager<Employee> userManager, IMapper mapper, ILogger<AddEmployeCommandHandler> logger, IMinioService minioService)
+        public AddEmployeeCommandHandler(UserManager<Employee> userManager, IMapper mapper, ILogger<AddEmployeeCommandHandler> logger, IMinioService minioService)
         {
             _userManager = userManager;
             _mapper = mapper;

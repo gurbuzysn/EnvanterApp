@@ -21,7 +21,7 @@ namespace EnvanterApp.WebAPI.Controllers
             var employees = await _mediator.Send(new GetEmployeesQueryRequest());
             return Ok(employees);
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> AddEmployee(AddEmployeeCommandRequest addEmployeeCommandRequest)
         {
