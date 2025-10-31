@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace EnvanterApp.Persistence.Repositories
 {
-    public class WriteRepository<T> : IWriteRepository<T> where T : class
+    public class WriteRepository<T> : IWriteRepository<T> where T : BaseEntity
     {
         private readonly EnvanterAppDbContext _context;
 
@@ -33,11 +33,11 @@ namespace EnvanterApp.Persistence.Repositories
         }
 
 
-        //public async Task<bool> RemoveAsync(Guid id)
-        //{
-        //    T model = await _context.Set<T>().FirstOrDefaultAsync(x => x.Id == id);
-        //    return Remove(model);
-        //}
+        public async Task<bool> RemoveAsync(Guid id)
+        {
+            T model = await _context.Set<T>().FirstOrDefaultAsync(x => x.Id == id);
+            return Remove(model);
+        }
 
         public bool Remove(T model)
         {

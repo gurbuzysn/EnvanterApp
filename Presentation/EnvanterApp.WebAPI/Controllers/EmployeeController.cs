@@ -1,4 +1,6 @@
 ﻿using EnvanterApp.Application.Features.Commands.Employees;
+using EnvanterApp.Application.Features.Commands.Employees.RemoveEmployee;
+using EnvanterApp.Application.Features.Commands.Employees.UpdateEmployee;
 using EnvanterApp.Application.Features.Queries.GetEmployees;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -23,10 +25,27 @@ namespace EnvanterApp.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddEmployee(AddEmployeeCommandRequest addEmployeeCommandRequest)
+        public async Task<IActionResult> AddEmployee([FromForm] AddEmployeeCommandRequest addEmployeeCommandRequest)
         {
             var result = await _mediator.Send(addEmployeeCommandRequest);
             return Ok(result);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> RemoveEmployee([FromRoute]Guid id)
+        {
+            var result = await _mediator.Send( new RemoveEmployeeCommandRequest() { Id = id });
+            return Ok(result);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateEmployee(Guid id, [FromForm] UpdateEmployeeCommandRequest updateEmployeeCommandRequest)
+        {
+            updateEmployeeCommandRequest.Id = id;
+            var result = await _mediator.Send(updateEmployeeCommandRequest);
+            return Ok(result);
+        }
+
+
     }
 }

@@ -8,6 +8,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using Minio;
 using Serilog;
 using Serilog.Core;
 using Serilog.Sinks.MSSqlServer;
@@ -51,6 +52,16 @@ namespace EnvanterApp.WebAPI
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Token:SecurityKey"])),
                     ClockSkew = TimeSpan.Zero
                 };
+            });
+
+            builder.Services.AddSingleton<IMinioClient>(sp =>
+            {
+                var config = sp.GetRequiredService<IConfiguration>();
+                return new MinioClient()
+                    .WithEndpoint(config["Minio:Endpoint"])
+                    .WithCredentials(config["Minio:AccessKey"], config["Minio:SecretKey"])
+                    .WithSSL(bool.Parse(config["Minio:UseSSL"] ?? "false"))
+                    .Build();
             });
 
             builder.Services.AddControllers()

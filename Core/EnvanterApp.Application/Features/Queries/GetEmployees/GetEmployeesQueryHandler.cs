@@ -35,7 +35,7 @@ namespace EnvanterApp.Application.Features.Queries.GetEmployees
                 foreach (var employee in dtoAllEmployees)
                 {
                     if(!employee.ImageUri.IsNullOrEmpty())
-                        employee.ImageUri = await _minioService.GetFileAsBase64Async("profile-images", employee.ImageUri!);
+                        employee.ProfileImage = await _minioService.GetFileAsBase64Async("profile-images", employee.ImageUri!);
                 }
 
                 generalResponse.IsSuccess = true;
