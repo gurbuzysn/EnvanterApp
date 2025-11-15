@@ -1,4 +1,6 @@
-﻿using EnvanterApp.Application.Abstractions.Token;
+﻿using AutoMapper;
+using EnvanterApp.Application.Abstractions.Minio;
+using EnvanterApp.Application.Abstractions.Token;
 using EnvanterApp.Application.DTOs;
 using EnvanterApp.Domain.Entities.Identity;
 using MediatR;
@@ -12,12 +14,16 @@ namespace EnvanterApp.Application.Features.Queries.LoginUser
         private readonly UserManager<Employee> _userManager;
         private readonly SignInManager<Employee> _signInManager;
         private readonly ITokenHandler _tokenHandler;
+        private readonly IMapper _mapper;
+        private readonly IMinioService _minioService;
 
-        public LoginUserQueryHandler(UserManager<Employee> userManager, SignInManager<Employee> signInManager, ITokenHandler tokenHandler)
+        public LoginUserQueryHandler(UserManager<Employee> userManager, SignInManager<Employee> signInManager, ITokenHandler tokenHandler, IMapper mapper, IMinioService minioService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _tokenHandler = tokenHandler;
+            _mapper = mapper;
+            _minioService = minioService;
         }
         public async Task<GeneralResponse<LoginUserQueryResponse>> Handle(LoginUserQueryRequest request, CancellationToken cancellationToken)
         {
@@ -37,13 +43,23 @@ namespace EnvanterApp.Application.Features.Queries.LoginUser
             {
                 Token token = _tokenHandler.CreateAccessToken();
 
-                return new GeneralResponse<LoginUserQueryResponse>()
-                {
-                    IsSuccess = true,
-                    Message = "Giriş Başarılı.",
-                    Result = new LoginUserQueryResponse() { Token = token },
-                    StatusCode = System.Net.HttpStatusCode.OK
-                };
+                var generalResponse = new GeneralResponse<LoginUserQueryResponse>();
+
+                generalResponse.IsSuccess = true;
+                generalResponse.Message = "Giriş Başarılı.";
+                generalResponse.Result = _mapper.Map<Employee, LoginUserQueryResponse>(user);
+                generalResponse.Result.Token = token;
+                generalResponse.StatusCode = System.Net.HttpStatusCode.OK;
+
+
+                if(generalResponse.Result.ImageUri != null)
+                    generalResponse.Result.ImageUri = await _minioService.GetFileAsBase64Async("profile-images", generalResponse.Result.ImageUri);
+
+
+
+
+
+
 
             }
             return new GeneralResponse<LoginUserQueryResponse>()
