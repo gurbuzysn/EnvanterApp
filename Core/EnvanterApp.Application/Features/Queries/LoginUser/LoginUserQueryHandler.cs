@@ -42,25 +42,17 @@ namespace EnvanterApp.Application.Features.Queries.LoginUser
             if (result.Succeeded)
             {
                 Token token = _tokenHandler.CreateAccessToken();
-
                 var generalResponse = new GeneralResponse<LoginUserQueryResponse>();
-
                 generalResponse.IsSuccess = true;
                 generalResponse.Message = "Giriş Başarılı.";
                 generalResponse.Result = _mapper.Map<Employee, LoginUserQueryResponse>(user);
                 generalResponse.Result.Token = token;
                 generalResponse.StatusCode = System.Net.HttpStatusCode.OK;
 
-
                 if(generalResponse.Result.ImageUri != null)
                     generalResponse.Result.ImageUri = await _minioService.GetFileAsBase64Async("profile-images", generalResponse.Result.ImageUri);
 
-
-
-
-
-
-
+                return generalResponse;
             }
             return new GeneralResponse<LoginUserQueryResponse>()
             {
