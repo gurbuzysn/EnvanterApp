@@ -53,7 +53,6 @@ namespace EnvanterApp.Infrastructure.Services.Minio
                             .WithObject(file)
                             .WithCallbackStream(stream => stream.CopyTo(ms))
                     );
-
                     var bytes = ms.ToArray();
                     return Convert.ToBase64String(bytes);
                 }

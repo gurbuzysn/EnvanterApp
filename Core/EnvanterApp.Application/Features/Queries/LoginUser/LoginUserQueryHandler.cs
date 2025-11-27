@@ -41,18 +41,26 @@ namespace EnvanterApp.Application.Features.Queries.LoginUser
             SignInResult result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
             if (result.Succeeded)
             {
-                Token token = _tokenHandler.CreateAccessToken();
-                var generalResponse = new GeneralResponse<LoginUserQueryResponse>();
-                generalResponse.IsSuccess = true;
-                generalResponse.Message = "Giriş Başarılı.";
-                generalResponse.Result = _mapper.Map<Employee, LoginUserQueryResponse>(user);
-                generalResponse.Result.Token = token;
-                generalResponse.StatusCode = System.Net.HttpStatusCode.OK;
+                try
+                {
+                    Token token = _tokenHandler.CreateAccessToken();
+                    var generalResponse = new GeneralResponse<LoginUserQueryResponse>();
+                    generalResponse.IsSuccess = true;
+                    generalResponse.Message = "Giriş Başarılı.";
+                    generalResponse.Result = _mapper.Map<Employee, LoginUserQueryResponse>(user);
+                    generalResponse.Result.Token = token;
+                    generalResponse.StatusCode = System.Net.HttpStatusCode.OK;
 
-                if(generalResponse.Result.ImageUri != null)
-                    generalResponse.Result.ImageUri = await _minioService.GetFileAsBase64Async("profile-images", generalResponse.Result.ImageUri);
+                    if (generalResponse.Result.ImageUri != null)
+                        generalResponse.Result.ImageUri = await _minioService.GetFileAsBase64Async("profile-images", generalResponse.Result.ImageUri);
 
-                return generalResponse;
+                    return generalResponse;
+                }
+                catch (Exception ex)
+                {
+
+                    throw;
+                }
             }
             return new GeneralResponse<LoginUserQueryResponse>()
             {

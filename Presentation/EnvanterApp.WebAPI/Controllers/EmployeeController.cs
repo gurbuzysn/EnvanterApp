@@ -28,14 +28,14 @@ namespace EnvanterApp.WebAPI.Controllers
         public async Task<IActionResult> AddEmployee([FromForm] AddEmployeeCommandRequest addEmployeeCommandRequest)
         {
             var result = await _mediator.Send(addEmployeeCommandRequest);
-            return Ok(result);
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> RemoveEmployee([FromRoute]Guid id)
+        public async Task<IActionResult> RemoveEmployee([FromRoute] Guid id)
         {
-            var result = await _mediator.Send( new RemoveEmployeeCommandRequest() { Id = id });
-            return Ok(result);
+            var result = await _mediator.Send(new RemoveEmployeeCommandRequest() { Id = id });
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
 
         [HttpPut("{id}")]
@@ -43,7 +43,7 @@ namespace EnvanterApp.WebAPI.Controllers
         {
             updateEmployeeCommandRequest.Id = id;
             var result = await _mediator.Send(updateEmployeeCommandRequest);
-            return Ok(result);
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
 
 
