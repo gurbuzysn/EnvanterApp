@@ -26,12 +26,13 @@ namespace EnvanterApp.Persistence.Context
                 CreatedDate = DateTime.Now,
                 CreatedBy = Guid.NewGuid(),
                 FirstName = "Admin",
-                LastName = "",
+                LastName = "Admin",
                 Department = "İdare",
                 UserName = "admin@envanterapp.com",
                 Email = "admin@envanterapp.com",
                 Title = "Yönetici",
                 PhoneNumber = "5554443322",
+                ImageUri = "http://localhost:9000/profile-images/677cda98-4ee1-4ada-a990-7d05f920f78b.png",
                 EmailConfirmed = true
             };
             await userManager.CreateAsync(adminUser, "123456");

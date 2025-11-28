@@ -12,6 +12,6 @@ namespace EnvanterApp.Application.Features.Commands.Categories
     public class AddCategoryCommandRequest : IRequest<GeneralResponse<AddCategoryCommandResponse>>
     {
         public string CategoryName { get; set; }
-        public IFormFile?   CategoryImage { get; set; }
+        public IFormFile? CategoryImage { get; set; }
     }
 }
