@@ -57,11 +57,19 @@ namespace EnvanterApp.WebAPI
             builder.Services.AddSingleton<IMinioClient>(sp =>
             {
                 var config = sp.GetRequiredService<IConfiguration>();
-                return new MinioClient()
-                    .WithEndpoint(config["Minio:Endpoint"])
-                    .WithCredentials(config["Minio:AccessKey"], config["Minio:SecretKey"])
-                    .WithSSL(bool.Parse(config["Minio:UseSSL"] ?? "false"))
-                    .Build();
+                var endpoint = config["Minio:Endpoint"];
+                var accessKey = config["Minio:AccessKey"];
+                var secretKey = config["Minio:SecretKey"];
+                var useSSL = bool.Parse(config["Minio:UseSSL"] ?? "false");
+
+                var client = new MinioClient()
+                    .WithEndpoint(endpoint)
+                    .WithCredentials(accessKey, secretKey);
+
+                if (useSSL)
+                    client = client.WithSSL();
+
+                return client.Build();
             });
 
             builder.Services.AddControllers()

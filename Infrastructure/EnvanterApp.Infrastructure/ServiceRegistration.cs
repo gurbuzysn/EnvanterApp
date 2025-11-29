@@ -14,7 +14,6 @@ namespace EnvanterApp.Infrastructure
         {
             services.AddScoped<ITokenHandler, TokenHandler>();
             services.AddScoped<IMinioService, MinioService>();
-            services.AddSingleton<IMinioClient, MinioClient>();
         }
     }
 }
