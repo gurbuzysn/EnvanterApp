@@ -27,47 +27,28 @@ namespace EnvanterApp.Application.Features.Queries.LoginUser
         }
         public async Task<GeneralResponse<LoginUserQueryResponse>> Handle(LoginUserQueryRequest request, CancellationToken cancellationToken)
         {
-            Employee user = await _userManager.FindByNameAsync(request.UserName);
-
-            if (user == null)
+            try
             {
-                return new GeneralResponse<LoginUserQueryResponse>()
-                {
-                    IsSuccess = false,
-                    Message = "Kullanıcı veya şifre hatalı",
-                };
+                Employee? user = await _userManager.FindByNameAsync(request.UserName);
+                if (user == null)
+                    return Response.Fail<LoginUserQueryResponse>("Sistemde bu bilgilere ait bir kullanıcı bulunmamaktadır!", null, System.Net.HttpStatusCode.Unauthorized);
+
+                SignInResult result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
+                if (!result.Succeeded)
+                    return Response.Fail<LoginUserQueryResponse>("Kullanıcı adı veya şifre hatalı!", null, System.Net.HttpStatusCode.Unauthorized);
+
+                Token token = _tokenHandler.CreateAccessToken();
+                var returnUser = _mapper.Map<Employee, LoginUserQueryResponse>(user);
+                returnUser.Token = token;
+                if (!string.IsNullOrWhiteSpace(returnUser.ImageUri))
+                    returnUser.ImageUri = await _minioService.GetFileAsBase64Async("profile-images", returnUser.ImageUri);
+
+                return Response.Ok<LoginUserQueryResponse>("Giriş Başarılı.", returnUser, System.Net.HttpStatusCode.OK);
             }
-
-            SignInResult result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
-            if (result.Succeeded)
+            catch (Exception ex)
             {
-                try
-                {
-                    Token token = _tokenHandler.CreateAccessToken();
-                    var generalResponse = new GeneralResponse<LoginUserQueryResponse>();
-                    generalResponse.IsSuccess = true;
-                    generalResponse.Message = "Giriş Başarılı.";
-                    generalResponse.Result = _mapper.Map<Employee, LoginUserQueryResponse>(user);
-                    generalResponse.Result.Token = token;
-                    generalResponse.StatusCode = System.Net.HttpStatusCode.OK;
-
-                    if (generalResponse.Result.ImageUri != null)
-                        generalResponse.Result.ImageUri = await _minioService.GetFileAsBase64Async("profile-images", generalResponse.Result.ImageUri);
-
-                    return generalResponse;
-                }
-                catch (Exception ex)
-                {
-
-                    throw;
-                }
+                return Response.Fail<LoginUserQueryResponse>($"Sistemde teknik bir hata oluştu. Hata mesajı : {ex.Message}", null, System.Net.HttpStatusCode.InternalServerError);
             }
-            return new GeneralResponse<LoginUserQueryResponse>()
-            {
-                IsSuccess = false,
-                Message = "Kullanıcı adı veya şifre hatalı",
-                StatusCode = System.Net.HttpStatusCode.Unauthorized
-            };
         }
     }
 }

@@ -31,30 +31,17 @@ namespace EnvanterApp.Application.Features.Commands.Categories
                 if (!string.IsNullOrEmpty(categoryImageUrl))
                     category.ImageUri = categoryImageUrl;
 
-                var result = await _writeRepository.AddAsync(category);
+                await _writeRepository.AddAsync(category);
                 var saveResult = await _writeRepository.SaveAsync();
 
-
-
                 if (saveResult < 1)
-                {
-                    response.IsSuccess = false;
-                    response.Message = "Kategori ekleme işlemi başarısız";
-                    response.StatusCode = System.Net.HttpStatusCode.BadRequest;
-                    return response;
-                }
+                    return Response.Fail<AddCategoryCommandResponse>("Kategori ekleme işlemi başarısız!", null, System.Net.HttpStatusCode.BadRequest);
 
-                response.IsSuccess = true;
-                response.Message = "Kategori ekleme işlemi başarılı";
-                response.StatusCode = System.Net.HttpStatusCode.OK;
-                return response;
+                return Response.Ok<AddCategoryCommandResponse>("Kategori ekleme işlemi başarıyla gerçekleşti.", null, System.Net.HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
-                response.IsSuccess = false;
-                response.Message = $"Sistemde teknik bir hata oluştu! Hata Mesajı: {ex?.ToString()}";
-                response.StatusCode = System.Net.HttpStatusCode.InternalServerError;
-                return response;
+                return Response.Fail<AddCategoryCommandResponse>($"Sistemde teknik bir hata oluştu! Hata Mesajı: {ex?.Message}", null, System.Net.HttpStatusCode.InternalServerError);
             }
         }
     }

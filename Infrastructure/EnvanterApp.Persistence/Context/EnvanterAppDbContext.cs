@@ -23,5 +23,45 @@ namespace EnvanterApp.Persistence.Context
         public DbSet<Assignment> Assignments { get; set; }
         public DbSet<Item> Items { get; set; }
         public DbSet<Category> Categories { get; set; }
+
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<Employee>(e =>
+            {
+                e.HasKey(e => e.Id);
+            });
+
+            builder.Entity<AppRole>(r =>
+            {
+                r.HasKey(r => r.Id);
+            });
+
+            builder.Entity<Assignment>(e =>
+            {
+                e.HasKey(x => x.Id);
+                e.Property(x => x.RowId)
+                    .ValueGeneratedOnAdd()
+                    .UseIdentityColumn(1, 1);
+            });
+
+            builder.Entity<Item>(e =>
+            {
+                e.HasKey(x => x.Id);
+                e.Property(x => x.RowId)
+                    .ValueGeneratedOnAdd()
+                    .UseIdentityColumn(1, 1);
+            });
+
+            builder.Entity<Category>(c =>
+            {
+                c.HasKey(c => c.Id);
+                c.Property(c => c.RowId)
+                    .ValueGeneratedOnAdd()
+                    .UseIdentityColumn(1, 1); ;
+            });
+        }
     }
 }

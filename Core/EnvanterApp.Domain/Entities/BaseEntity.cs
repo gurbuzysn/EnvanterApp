@@ -9,7 +9,8 @@ namespace EnvanterApp.Domain.Entities
 {
     public class BaseEntity
     {
-        public Guid Id { get; set; }
+        public int RowId { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
         public Status Status { get; set; }
         public DateTime CreatedDate { get; set; }
         public Guid CreatedBy { get; set; }

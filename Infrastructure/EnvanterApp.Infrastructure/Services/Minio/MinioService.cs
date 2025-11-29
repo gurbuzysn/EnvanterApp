@@ -34,7 +34,6 @@ namespace EnvanterApp.Infrastructure.Services.Minio
                     .WithObjectSize(file.Length)
                     .WithContentType(file.ContentType));
             }
-
             return $"http://localhost:9000/{bucketName}/{fileName}";
         }
 
@@ -47,7 +46,7 @@ namespace EnvanterApp.Infrastructure.Services.Minio
 
                 using (var ms = new MemoryStream())
                 {
-                    await _minioClient.GetObjectAsync(
+                     await _minioClient.GetObjectAsync(
                         new GetObjectArgs()
                             .WithBucket(bucketName)
                             .WithObject(file)
@@ -59,7 +58,7 @@ namespace EnvanterApp.Infrastructure.Services.Minio
             }
             catch (Exception ex)
             {
-                throw new Exception($"MinIO dosya okunamadı: {ex.Message}");
+                return ($"Dosya Bulunamadı! Hata Mesajı: {ex.Message}");
             }
         }
         public Task RemoveFileAsync(string bucketName, string fileUrl)

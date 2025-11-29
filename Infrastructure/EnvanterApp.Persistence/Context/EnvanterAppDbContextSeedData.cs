@@ -14,14 +14,13 @@ namespace EnvanterApp.Persistence.Context
             if (await context.Employees.AnyAsync() || await context.Roles.AnyAsync())
                 return;
 
-            AppRole adminRole = new AppRole() { Name = "Admin" };
-            AppRole employeeRole = new AppRole() { Name = "Employee" };
+            AppRole adminRole = new AppRole() { Name = "Admin", CreatedDate = DateTime.Now };
+            AppRole employeeRole = new AppRole() { Name = "Employee", CreatedDate = DateTime.Now };
             await roleManager.CreateAsync(adminRole);
             await roleManager.CreateAsync(employeeRole);
 
             Employee adminUser = new Employee()
             {
-                Id = Guid.NewGuid(),
                 Status = Status.Active,
                 CreatedDate = DateTime.Now,
                 CreatedBy = Guid.NewGuid(),
@@ -35,8 +34,11 @@ namespace EnvanterApp.Persistence.Context
                 ImageUri = "http://localhost:9000/profile-images/677cda98-4ee1-4ada-a990-7d05f920f78b.png",
                 EmailConfirmed = true
             };
+
             await userManager.CreateAsync(adminUser, "123456");
-            await userManager.AddToRoleAsync(adminUser, "Admin");
+            var createdUser = await userManager.FindByNameAsync("admin@envanterapp.com");
+            if(createdUser != null)
+                await userManager.AddToRoleAsync(createdUser, "Admin");
         }
     }
 }

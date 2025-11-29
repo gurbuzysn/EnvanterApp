@@ -23,6 +23,7 @@ namespace EnvanterApp.Application.DTOs
             {
                 IsSuccess = false,
                 Message = message,
+                Result = result,
                 StatusCode = statusCode
             };
     }
