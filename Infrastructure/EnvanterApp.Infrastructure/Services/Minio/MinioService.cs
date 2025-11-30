@@ -23,7 +23,7 @@ namespace EnvanterApp.Infrastructure.Services.Minio
             if (!found)
                 await _minioClient.MakeBucketAsync(new MakeBucketArgs().WithBucket(bucketName));
 
-            string fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
+            string fileName =$"{Path.GetFileNameWithoutExtension(file.FileName)}_{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
 
             using (var stream = file.OpenReadStream())
             {
@@ -36,8 +36,7 @@ namespace EnvanterApp.Infrastructure.Services.Minio
             }
             return $"http://localhost:9000/{bucketName}/{fileName}";
         }
-
-        public async Task<string> GetFileAsBase64Async(string bucketName, string fileName)
+        public async Task<string> GetFileAsync(string bucketName, string fileName)
         {
             try
             {
@@ -61,11 +60,18 @@ namespace EnvanterApp.Infrastructure.Services.Minio
                 return ($"Dosya Bulunamadı! Hata Mesajı: {ex.Message}");
             }
         }
-        public Task RemoveFileAsync(string bucketName, string fileUrl)
+        public async Task<string> RemoveFileAsync(string bucketName, string fileUrl)
         {
-            throw new NotImplementedException();
-        }
+            //try
+            //{
+            //    await _minioClient.RemoveObjectAsync(,);
+            //}
+            //catch (Exception ex)
+            //{
 
-       
+            //}
+
+            return "abidikgubidik";
+        }
     }
 }

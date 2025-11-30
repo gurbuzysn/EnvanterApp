@@ -41,7 +41,7 @@ namespace EnvanterApp.Application.Features.Queries.LoginUser
                 var returnUser = _mapper.Map<Employee, LoginUserQueryResponse>(user);
                 returnUser.Token = token;
                 if (!string.IsNullOrWhiteSpace(returnUser.ImageUri))
-                    returnUser.ImageUri = await _minioService.GetFileAsBase64Async("profile-images", returnUser.ImageUri);
+                    returnUser.ImageUri = await _minioService.GetFileAsync("profile-images", returnUser.ImageUri);
 
                 return Response.Ok<LoginUserQueryResponse>("Giriş Başarılı.", returnUser, System.Net.HttpStatusCode.OK);
             }

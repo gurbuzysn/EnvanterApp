@@ -6,6 +6,7 @@ using EnvanterApp.Domain.Entities.Identity;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using System.Net;
 
 namespace EnvanterApp.Application.Features.Queries.GetEmployees
 {
@@ -25,31 +26,24 @@ namespace EnvanterApp.Application.Features.Queries.GetEmployees
         }
         public async Task<GeneralResponse<List<GetEmployeesQueryResponse>>> Handle(GetEmployeesQueryRequest request, CancellationToken cancellationToken)
         {
-            var generalResponse = new GeneralResponse<List<GetEmployeesQueryResponse>>();
             try
             {
-                var allEmployees = _readRepository.GetAll().ToList();
+                var allEmployees = await _readRepository.GetAll().ToListAsync();
                 var dtoAllEmployees = _mapper.Map<List<Employee>, List<GetEmployeesQueryResponse>>(allEmployees);
-
 
                 foreach (var employee in dtoAllEmployees)
                 {
                     if(!employee.ImageUri.IsNullOrEmpty())
-                        employee.ProfileImage = await _minioService.GetFileAsBase64Async("profile-images", employee.ImageUri!);
+                        employee.ProfileImage = await _minioService.GetFileAsync("profile-images", employee.ImageUri!);
                 }
 
-                generalResponse.IsSuccess = true;
-                generalResponse.Message = "Çalışanların listesi başarıyla getirildi.";
-                generalResponse.Result = dtoAllEmployees;
                 _logger.LogInformation($"Employee listesi başarıyla getirildi. Toplam {dtoAllEmployees.Count} kayıt.");
-                return generalResponse;
+                return Response.Ok<List<GetEmployeesQueryResponse>>("Çalışanların listesi başarıyla getirildi.", dtoAllEmployees, HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
-                generalResponse.IsSuccess = false;
-                generalResponse.Message = "Çalışan listesi getirilirken bir hata oluştu!";
-                _logger.LogError(ex, "GetEmployeesQuery sırasında bir hata oluştu. Request: {@request}", request);
-                return generalResponse;
+                _logger.LogError(ex.Message, "GetEmployeesQuery sırasında bir hata oluştu. Request: {@request}", request);
+                return Response.Fail<List<GetEmployeesQueryResponse>>("Çalışan listesi getirilirken bir hata oluştu!",null, HttpStatusCode.InternalServerError);
             }
         }
     }

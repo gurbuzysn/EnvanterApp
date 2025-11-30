@@ -38,8 +38,8 @@ namespace EnvanterApp.Application.Validators.Employees
             When(x => x.ProfileImage != null, () =>
             {
                 RuleFor(x => x.ProfileImage.Length)
-                    .LessThanOrEqualTo(4 * 1024 * 1024)
-                    .WithMessage("Profil resmi en fazla 4 MB olabilir.");
+                    .LessThanOrEqualTo(5 * 1024 * 1024)
+                    .WithMessage("Profil resmi en fazla 5 MB olabilir.");
             });
 
         }
