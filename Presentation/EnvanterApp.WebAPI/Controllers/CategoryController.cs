@@ -1,4 +1,5 @@
 ﻿using EnvanterApp.Application.Features.Commands.Categories;
+using EnvanterApp.Application.Features.Queries.Categories.GetCategories;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +19,13 @@ namespace EnvanterApp.WebAPI.Controllers
         public async Task<IActionResult> AddCategory([FromForm] AddCategoryCommandRequest addCategoryCommandRequest)
         {
             var result = await _mediator.Send(addCategoryCommandRequest);
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetCategories()
+        {
+            var result = await _mediator.Send(new GetCategoriesQueryRequest());
             return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
     }

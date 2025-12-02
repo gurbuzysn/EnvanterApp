@@ -34,7 +34,7 @@ namespace EnvanterApp.Application.Features.Commands.Categories
                 await _writeRepository.AddAsync(category);
                 var saveResult = await _writeRepository.SaveAsync();
 
-                if (saveResult < 1)
+                 if (saveResult < 1)
                     return Response.Fail<AddCategoryCommandResponse>("Kategori ekleme işlemi başarısız!", null, System.Net.HttpStatusCode.BadRequest);
 
                 return Response.Ok<AddCategoryCommandResponse>("Kategori ekleme işlemi başarıyla gerçekleşti.", null, System.Net.HttpStatusCode.OK);

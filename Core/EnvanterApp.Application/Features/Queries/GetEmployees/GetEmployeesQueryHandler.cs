@@ -4,6 +4,7 @@ using EnvanterApp.Application.DTOs;
 using EnvanterApp.Application.Repositories;
 using EnvanterApp.Domain.Entities.Identity;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System.Net;
