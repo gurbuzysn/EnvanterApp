@@ -3,7 +3,7 @@ using MediatR;
 
 namespace EnvanterApp.Application.Features.Queries.Categories.GetCategories
 {
-    public class GetCategoriesQueryRequest : IRequest<GeneralResponse<GetCategoriesQueryResponse>>
+    public class GetCategoriesQueryRequest : IRequest<GeneralResponse<List<GetCategoriesQueryResponse>>>
     {
     }
 }

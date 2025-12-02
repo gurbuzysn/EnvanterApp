@@ -1,4 +1,5 @@
 ﻿using EnvanterApp.Application.Features.Commands.Categories;
+using EnvanterApp.Application.Features.Commands.Categories.RemoveCategory;
 using EnvanterApp.Application.Features.Queries.Categories.GetCategories;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +27,13 @@ namespace EnvanterApp.WebAPI.Controllers
         public async Task<IActionResult> GetCategories()
         {
             var result = await _mediator.Send(new GetCategoriesQueryRequest());
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> RemoveCategories([FromRoute] Guid id)
+        {
+            var result = await _mediator.Send(new RemoveCategoryCommandRequest() {Id = id});
             return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
     }

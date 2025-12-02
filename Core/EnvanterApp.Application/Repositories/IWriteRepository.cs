@@ -13,7 +13,7 @@ namespace EnvanterApp.Application.Repositories
         Task<bool> AddRangeAsync(List<T> models);
         bool Update(T model);
         bool Remove(T model);
-        //Task<bool> RemoveAsync(Guid id);
+        Task<bool> RemoveAsync(Guid id);
         bool RemoveRange(List<T> models);
         Task<int> SaveAsync();
     }

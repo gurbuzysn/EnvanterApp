@@ -45,7 +45,5 @@ namespace EnvanterApp.WebAPI.Controllers
             var result = await _mediator.Send(updateEmployeeCommandRequest);
             return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
-
-
     }
 }

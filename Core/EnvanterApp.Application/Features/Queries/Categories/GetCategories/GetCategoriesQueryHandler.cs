@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace EnvanterApp.Application.Features.Queries.Categories.GetCategories
 {
-    public class GetCategoriesQueryHandler : IRequestHandler<GetCategoriesQueryRequest, GeneralResponse<GetCategoriesQueryResponse>>
+    public class GetCategoriesQueryHandler : IRequestHandler<GetCategoriesQueryRequest, GeneralResponse<List<GetCategoriesQueryResponse>>>
     {
         private readonly Repositories.IReadRepository<Category> _readRepository;
         private readonly IMapper _mapper;
@@ -25,20 +25,27 @@ namespace EnvanterApp.Application.Features.Queries.Categories.GetCategories
             _mapper = mapper;
             _minioService = minioService;
         }
-        public async Task<GeneralResponse<GetCategoriesQueryResponse>> Handle(GetCategoriesQueryRequest request, CancellationToken cancellationToken)
+        public async Task<GeneralResponse<List<GetCategoriesQueryResponse>>> Handle(GetCategoriesQueryRequest request, CancellationToken cancellationToken)
         {
-            var categories = await _readRepository.GetAll().Where(c => c.Status == Domain.Enums.Status.Active).ToListAsync();
-
-            var dtoCategories = _mapper.Map<List<GetCategoriesQueryResponse>>(categories);
-
-            foreach (var category in dtoCategories)
+            try
             {
-                category.ImageUri = _
+                var categories = await _readRepository.GetAll().Where(c => c.Status == Domain.Enums.Status.Active).ToListAsync();
+                var dtoCategories = _mapper.Map<List<GetCategoriesQueryResponse>>(categories);
+
+                foreach (var category in dtoCategories)
+                {
+                    if (!string.IsNullOrWhiteSpace(category.ImageUri))
+                    {
+                        category.ImageUri = await _minioService.GetFileAsync("category-images", category.ImageUri);
+                    }
+                }
+
+                return Response.Ok<List<GetCategoriesQueryResponse>>("Kategoriler başarıyla getirildi.", dtoCategories, System.Net.HttpStatusCode.OK);
             }
-
-
-
-
+            catch (Exception ex)
+            {
+                return Response.Fail<List<GetCategoriesQueryResponse>>($"Sistemde teknik bir hata oluştu! Hata mesajı : {ex.Message}", null, System.Net.HttpStatusCode.InternalServerError);
+            }
         }
     }
 }
