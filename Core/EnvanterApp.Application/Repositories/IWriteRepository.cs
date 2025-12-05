@@ -16,5 +16,7 @@ namespace EnvanterApp.Application.Repositories
         Task<bool> RemoveAsync(Guid id);
         bool RemoveRange(List<T> models);
         Task<int> SaveAsync();
+        void SetPropertyNotModified<TProperty>(T entity, System.Linq.Expressions.Expression<Func<T, TProperty>> propertyExpression);
+
     }
 }

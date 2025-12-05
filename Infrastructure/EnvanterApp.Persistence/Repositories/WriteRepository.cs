@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,8 +36,11 @@ namespace EnvanterApp.Persistence.Repositories
 
         public async Task<bool> RemoveAsync(Guid id)
         {
-            T model = await _context.Set<T>().FirstOrDefaultAsync(x => x.Id == id);
-            return Remove(model);
+            T? model = await _context.Set<T>().FirstOrDefaultAsync(x => x.Id == id);
+            if(model != null)
+                model.Status = Domain.Enums.Status.Passive;
+
+            return (await _context.SaveChangesAsync()) > 0;
         }
 
         public bool Remove(T model)
@@ -56,7 +60,11 @@ namespace EnvanterApp.Persistence.Repositories
             EntityEntry entityEntry = _context.Update(model);
             return entityEntry.State == EntityState.Modified;
         }
-
         public async Task<int> SaveAsync() => await _context.SaveChangesAsync();
+
+        public void SetPropertyNotModified<TProperty>(T entity, Expression<Func<T, TProperty>> propertyExpression)
+        {
+            _context.Entry(entity).Property(propertyExpression).IsModified = false;
+        }
     }
 }

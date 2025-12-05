@@ -4,6 +4,7 @@ using EnvanterApp.Domain.Entities.Identity;
 using EnvanterApp.Infrastructure;
 using EnvanterApp.Persistence;
 using EnvanterApp.Persistence.Context;
+using EnvanterApp.WebAPI.Extensions;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -26,7 +27,6 @@ namespace EnvanterApp.WebAPI
             builder.Services.AddInfrastructureServices(builder.Configuration);
             builder.Services.AddPersistenceServices(builder.Configuration);
 
-            //Cors ayarlarý daha sonra revize edilerek kýsýtlanacak.
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll", builder =>
@@ -36,23 +36,10 @@ namespace EnvanterApp.WebAPI
                     .AllowAnyHeader();
                 });
             });
+            builder.Services.AddJwtAuthentication(builder.Configuration);
 
-            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-            {
-                options.RequireHttpsMetadata = false;
-                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-                {
-                    ValidateAudience = true,
-                    ValidateIssuer = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
 
-                    ValidAudience = builder.Configuration["Token:Audience"],
-                    ValidIssuer = builder.Configuration["Token:Issuer"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Token:SecurityKey"])),
-                    ClockSkew = TimeSpan.Zero
-                };
-            });
+
 
             builder.Services.AddSingleton<IMinioClient>(sp =>
             {
@@ -84,21 +71,21 @@ namespace EnvanterApp.WebAPI
 
             builder.Services.AddSwaggerGen();
 
-            //Logger log = new LoggerConfiguration()
-            //    .WriteTo.Console()
-            //    .WriteTo.File("logs/log.txt")
-            //    .WriteTo.MSSqlServer(
-            //        connectionString: builder.Configuration.GetConnectionString("DefaultConnection"),
-            //        sinkOptions: new MSSqlServerSinkOptions
-            //        {
-            //            TableName = "Logs",
-            //            AutoCreateSqlTable = true
-            //        })
-            //    .Enrich.FromLogContext()
-            //    .MinimumLevel.Information()
-            //    .CreateLogger();
+            Logger log = new LoggerConfiguration()
+                .WriteTo.Console()
+                .WriteTo.File("logs/log.txt")
+                .WriteTo.MSSqlServer(
+                    connectionString: builder.Configuration.GetConnectionString("DefaultConnection"),
+                    sinkOptions: new MSSqlServerSinkOptions
+                    {
+                        TableName = "Logs",
+                        AutoCreateSqlTable = true
+                    })
+                .Enrich.FromLogContext()
+                .MinimumLevel.Information()
+                .CreateLogger();
 
-            //builder.Host.UseSerilog(log);
+            builder.Host.UseSerilog(log);
 
             var app = builder.Build();
             if (app.Environment.IsDevelopment())

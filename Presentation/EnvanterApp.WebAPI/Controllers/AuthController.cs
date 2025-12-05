@@ -15,13 +15,11 @@ namespace EnvanterApp.WebAPI.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost("[action]")]
-        public async Task<IActionResult> Login(LoginUserQueryRequest loginUserQueryRequest)
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginUserQueryRequest loginUserQueryRequest)
         {
-            GeneralResponse<LoginUserQueryResponse> response = await _mediator.Send(loginUserQueryRequest);
-            if(!response.IsSuccess)
-                return Unauthorized(response);
-            return Ok(response);
+            var result = await _mediator.Send(loginUserQueryRequest);
+            return result.IsSuccess ? Ok(result) : Unauthorized(result);
         }
     }
 }

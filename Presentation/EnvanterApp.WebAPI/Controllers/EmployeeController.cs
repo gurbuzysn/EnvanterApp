@@ -17,17 +17,17 @@ namespace EnvanterApp.WebAPI.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllEmployees()
-        {
-            var employees = await _mediator.Send(new GetEmployeesQueryRequest());
-            return Ok(employees);
-        }
-
         [HttpPost]
         public async Task<IActionResult> AddEmployee([FromForm] AddEmployeeCommandRequest addEmployeeCommandRequest)
         {
             var result = await _mediator.Send(addEmployeeCommandRequest);
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllEmployees()
+        {
+            var result = await _mediator.Send(new GetEmployeesQueryRequest());
             return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
 
