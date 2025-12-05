@@ -1,19 +1,7 @@
 using EnvanterApp.Application;
-using EnvanterApp.Application.Validators.Employees;
-using EnvanterApp.Domain.Entities.Identity;
 using EnvanterApp.Infrastructure;
 using EnvanterApp.Persistence;
-using EnvanterApp.Persistence.Context;
 using EnvanterApp.WebAPI.Extensions;
-using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
-using Minio;
-using Serilog;
-using Serilog.Core;
-using Serilog.Sinks.MSSqlServer;
-using System.Text;
 
 namespace EnvanterApp.WebAPI
 {
@@ -22,70 +10,16 @@ namespace EnvanterApp.WebAPI
         public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            builder.Host.AddSerilogLogging(builder.Configuration);
             builder.Services.AddApplicationServices();
             builder.Services.AddInfrastructureServices(builder.Configuration);
             builder.Services.AddPersistenceServices(builder.Configuration);
-
-            builder.Services.AddCors(options =>
-            {
-                options.AddPolicy("AllowAll", builder =>
-                {
-                    builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader();
-                });
-            });
+            builder.Services.AddCustomCors();
             builder.Services.AddJwtAuthentication(builder.Configuration);
-
-
-
-
-            builder.Services.AddSingleton<IMinioClient>(sp =>
-            {
-                var config = sp.GetRequiredService<IConfiguration>();
-                var endpoint = config["Minio:Endpoint"];
-                var accessKey = config["Minio:AccessKey"];
-                var secretKey = config["Minio:SecretKey"];
-                var useSSL = bool.Parse(config["Minio:UseSSL"] ?? "false");
-
-                var client = new MinioClient()
-                    .WithEndpoint(endpoint)
-                    .WithCredentials(accessKey, secretKey);
-
-                if (useSSL)
-                    client = client.WithSSL();
-
-                return client.Build();
-            });
-
-            builder.Services.AddControllers()
-                            .AddFluentValidation(configuration => configuration.RegisterValidatorsFromAssemblyContaining<AddEmployeeValidator>())
-                            .AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.PropertyNamingPolicy = null;
-                options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
-            });
-
+            builder.Services.AddMinioClient(builder.Configuration);
+            builder.Services.AddCustomControllers();
             builder.Services.AddEndpointsApiExplorer();
-
             builder.Services.AddSwaggerGen();
-
-            Logger log = new LoggerConfiguration()
-                .WriteTo.Console()
-                .WriteTo.File("logs/log.txt")
-                .WriteTo.MSSqlServer(
-                    connectionString: builder.Configuration.GetConnectionString("DefaultConnection"),
-                    sinkOptions: new MSSqlServerSinkOptions
-                    {
-                        TableName = "Logs",
-                        AutoCreateSqlTable = true
-                    })
-                .Enrich.FromLogContext()
-                .MinimumLevel.Information()
-                .CreateLogger();
-
-            builder.Host.UseSerilog(log);
 
             var app = builder.Build();
             if (app.Environment.IsDevelopment())
@@ -99,14 +33,7 @@ namespace EnvanterApp.WebAPI
             app.UseAuthorization();
             app.MapControllers();
 
-            using (var scope = app.Services.CreateScope())
-            {
-                var context = scope.ServiceProvider.GetService<EnvanterAppDbContext>();
-                var userManager = scope.ServiceProvider.GetService<UserManager<Employee>>();
-                var roleManager = scope.ServiceProvider.GetService<RoleManager<AppRole>>();
-
-                await EnvanterAppDbContextSeedData.SeedData(context, userManager, roleManager);
-            }
+            await app.SeedDataAsync();
             app.Run();
         }
     }

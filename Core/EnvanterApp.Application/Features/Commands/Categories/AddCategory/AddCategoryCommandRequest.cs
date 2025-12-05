@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EnvanterApp.Application.Features.Commands.Categories
+namespace EnvanterApp.Application.Features.Commands.Categories.AddCategory
 {
     public class AddCategoryCommandRequest : IRequest<GeneralResponse<AddCategoryCommandResponse>>
     {

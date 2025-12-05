@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System.Net;
 
-namespace EnvanterApp.Application.Features.Queries.GetEmployees
+namespace EnvanterApp.Application.Features.Queries.Employees.GetEmployees
 {
     public class GetEmployeesQueryHandler : IRequestHandler<GetEmployeesQueryRequest, GeneralResponse<List<GetEmployeesQueryResponse>>>
     {
@@ -39,7 +39,7 @@ namespace EnvanterApp.Application.Features.Queries.GetEmployees
                 }
 
                 _logger.LogInformation($"Employee listesi başarıyla getirildi. Toplam {dtoAllEmployees.Count} kayıt.");
-                return Response.Ok<List<GetEmployeesQueryResponse>>("Çalışanların listesi başarıyla getirildi.", dtoAllEmployees, HttpStatusCode.OK);
+                return Response.Ok("Çalışanların listesi başarıyla getirildi.", dtoAllEmployees, HttpStatusCode.OK);
             }
             catch (Exception ex)
             {

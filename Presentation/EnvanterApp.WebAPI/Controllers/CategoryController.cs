@@ -1,4 +1,4 @@
-﻿using EnvanterApp.Application.Features.Commands.Categories;
+﻿using EnvanterApp.Application.Features.Commands.Categories.AddCategory;
 using EnvanterApp.Application.Features.Commands.Categories.RemoveCategory;
 using EnvanterApp.Application.Features.Commands.Categories.UpdateCategory;
 using EnvanterApp.Application.Features.Commands.Employees.UpdateEmployee;

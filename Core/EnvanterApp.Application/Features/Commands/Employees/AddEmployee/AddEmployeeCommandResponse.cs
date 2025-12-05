@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EnvanterApp.Application.Features.Commands.Categories
+namespace EnvanterApp.Application.Features.Commands.Employees.AddEmployee
 {
-    public class AddCategoryCommandResponse
+    public class AddEmployeeCommandResponse
     {
+        
     }
 }

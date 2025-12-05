@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EnvanterApp.Application.Features.Queries.GetEmployees
+namespace EnvanterApp.Application.Features.Queries.Employees.GetEmployees
 {
     public class GetEmployeesQueryRequest : IRequest<GeneralResponse<List<GetEmployeesQueryResponse>>>
     {

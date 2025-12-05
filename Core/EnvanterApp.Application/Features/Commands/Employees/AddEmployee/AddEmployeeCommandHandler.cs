@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using System.Net;
 
-namespace EnvanterApp.Application.Features.Commands.Employees
+namespace EnvanterApp.Application.Features.Commands.Employees.AddEmployee
 {
     public class AddEmployeeCommandHandler : IRequestHandler<AddEmployeeCommandRequest, GeneralResponse<AddEmployeeCommandResponse>>
     {
@@ -47,15 +47,15 @@ namespace EnvanterApp.Application.Features.Commands.Employees
                 var identityResult = await _userManager.CreateAsync(employee, "123456");
 
                 if (!identityResult.Succeeded)
-                    return Response.Fail<AddEmployeeCommandResponse>("Personel ekleme işlemi sırasında bir hata oluştu!", null, System.Net.HttpStatusCode.BadRequest);
+                    return Response.Fail<AddEmployeeCommandResponse>("Personel ekleme işlemi sırasında bir hata oluştu!", null, HttpStatusCode.BadRequest);
 
-                return Response.Ok<AddEmployeeCommandResponse>("Personel ekleme işlemi başarılı", null, System.Net.HttpStatusCode.OK);
+                return Response.Ok<AddEmployeeCommandResponse>("Personel ekleme işlemi başarılı", null, HttpStatusCode.OK);
 
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Personel ekleme sırasında sistemsel hata: {Message}", ex.Message);
-                return Response.Fail<AddEmployeeCommandResponse>("Personel ekleme işlemi sırasında bir hata oluştu!", null, System.Net.HttpStatusCode.InternalServerError);
+                return Response.Fail<AddEmployeeCommandResponse>("Personel ekleme işlemi sırasında bir hata oluştu!", null, HttpStatusCode.InternalServerError);
             }
         }
     }

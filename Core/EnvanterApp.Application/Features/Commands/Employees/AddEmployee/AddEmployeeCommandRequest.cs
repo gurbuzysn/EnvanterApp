@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Http;
 
-namespace EnvanterApp.Application.Features.Commands.Employees
+namespace EnvanterApp.Application.Features.Commands.Employees.AddEmployee
 {
     public class AddEmployeeCommandRequest : IRequest<GeneralResponse<AddEmployeeCommandResponse>>
     {

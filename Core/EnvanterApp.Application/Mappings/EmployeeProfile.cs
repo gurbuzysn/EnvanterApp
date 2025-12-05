@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using EnvanterApp.Application.Features.Commands.Employees;
+using EnvanterApp.Application.Features.Commands.Employees.AddEmployee;
 using EnvanterApp.Application.Features.Commands.Employees.UpdateEmployee;
-using EnvanterApp.Application.Features.Queries.GetEmployees;
+using EnvanterApp.Application.Features.Queries.Employees.GetEmployees;
 using EnvanterApp.Application.Features.Queries.LoginUser;
 using EnvanterApp.Domain.Entities.Identity;
 using System;

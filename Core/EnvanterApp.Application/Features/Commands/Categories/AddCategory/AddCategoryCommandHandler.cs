@@ -4,7 +4,7 @@ using EnvanterApp.Application.Repositories;
 using EnvanterApp.Domain.Entities;
 using MediatR;
 
-namespace EnvanterApp.Application.Features.Commands.Categories
+namespace EnvanterApp.Application.Features.Commands.Categories.AddCategory
 {
     public class AddCategoryCommandHandler : IRequestHandler<AddCategoryCommandRequest, GeneralResponse<AddCategoryCommandResponse>>
     {
