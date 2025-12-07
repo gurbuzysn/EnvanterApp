@@ -10,7 +10,7 @@ namespace EnvanterApp.WebAPI
         public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            builder.Host.AddSerilogLogging(builder.Configuration);
+            //builder.Host.AddSerilogLogging(builder.Configuration);
             builder.Services.AddApplicationServices();
             builder.Services.AddInfrastructureServices(builder.Configuration);
             builder.Services.AddPersistenceServices(builder.Configuration);

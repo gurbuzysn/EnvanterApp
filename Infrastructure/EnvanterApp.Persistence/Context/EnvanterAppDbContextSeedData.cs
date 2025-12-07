@@ -9,7 +9,7 @@ namespace EnvanterApp.Persistence.Context
     {
         public static async Task SeedData(EnvanterAppDbContext context, UserManager<Employee> userManager, RoleManager<AppRole> roleManager)
         {
-            await context.Database.MigrateAsync();
+            //await context.Database.MigrateAsync();
 
             if (await context.Employees.AnyAsync() || await context.Roles.AnyAsync())
                 return;
