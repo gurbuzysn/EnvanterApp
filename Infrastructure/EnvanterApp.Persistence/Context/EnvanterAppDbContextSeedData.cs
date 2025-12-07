@@ -31,7 +31,7 @@ namespace EnvanterApp.Persistence.Context
                 Email = "admin@envanterapp.com",
                 Title = "Yönetici",
                 PhoneNumber = "5554443322",
-                ImageUri = "http://localhost:9000/profile-images/677cda98-4ee1-4ada-a990-7d05f920f78b.png",
+                ImageUri = "http://localhost:9000/profile-images/Kerem_a344a770-fc6a-4fb2-adc9-9810cb333151.jpg",
                 EmailConfirmed = true
             };
 
