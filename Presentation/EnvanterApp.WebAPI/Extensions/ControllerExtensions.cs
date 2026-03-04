@@ -15,8 +15,7 @@ namespace EnvanterApp.WebAPI.Extensions
                     })
                     .AddJsonOptions(options =>
                     {
-                        options.JsonSerializerOptions.PropertyNamingPolicy = null;
-                        options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+                       
                     });
 
             return services;
